@@ -13,7 +13,7 @@ help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 docs:
-	@$(SPHINXBUILD) -M html "source" "../docs" $(SPHINXOPTS) $(O)
+	@$(SPHINXBUILD) -b html "source" "../docs"
 
 .PHONY: help Makefile
 
