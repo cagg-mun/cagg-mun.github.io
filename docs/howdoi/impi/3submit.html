@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>To run a program in the Intel MPI environment: &#8212; CAGG Torngat Documentation  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.3.6/yeti/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Monitoring Jobs" href="4monitor.html" />
+    <link rel="prev" title="Use the mpi compiler to compile the MPI program (sample program in Section 6):" href="2compile.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          CAGG Torngat Documentation</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">Computation Applied Geophysics Group</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">How do I ...</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notes.html">Paul S - Notes</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">To run a program in the Intel MPI environment:</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="2compile.html" title="Previous Chapter: Use the mpi compiler to compile the MPI program (sample program in Section 6):"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Use the mpi c...</span>
+    </a>
+  </li>
+  <li>
+    <a href="4monitor.html" title="Next Chapter: Monitoring Jobs"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Monitoring Jobs &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../../_sources/howdoi/impi/3submit.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="to-run-a-program-in-the-intel-mpi-environment">
+<h1>To run a program in the Intel MPI environment:<a class="headerlink" href="#to-run-a-program-in-the-intel-mpi-environment" title="Permalink to this headline">¶</a></h1>
+<p>Create a script file describing the job:</p>
+<pre class="code bash literal-block">
+<span class="ln"> 1 </span> <span class="comment single">#$ -cwd
+</span><span class="ln"> 2 </span><span class="comment single"></span> <span class="comment single">#$ -N hello
+</span><span class="ln"> 3 </span><span class="comment single"></span> <span class="comment single">#$ -o hello.output -j y
+</span><span class="ln"> 4 </span><span class="comment single"></span> <span class="comment single">#$ -pe impi 32
+</span><span class="ln"> 5 </span><span class="comment single"></span> <span class="comment single">#$ -q all.q
+</span><span class="ln"> 6 </span><span class="comment single"></span> <span class="comment single">#$ -V
+</span><span class="ln"> 7 </span><span class="comment single"></span>
+<span class="ln"> 8 </span> MakeMachineFile<span class="operator">()</span>
+<span class="ln"> 9 </span> <span class="operator">{</span>
+<span class="ln">10 </span>   cat <span class="name variable">$1</span> <span class="punctuation">|</span> <span class="keyword">while</span> <span class="name builtin">read</span> line<span class="punctuation">;</span> <span class="keyword">do</span>
+<span class="ln">11 </span>      <span class="name variable">host</span><span class="operator">=</span><span class="literal string backtick">`</span><span class="name builtin">echo</span> <span class="name variable">$line</span><span class="punctuation">|</span>cut -f1 -d<span class="literal string double">&quot; &quot;</span><span class="punctuation">|</span>cut -f1 -d<span class="literal string double">&quot;.&quot;</span><span class="literal string backtick">`</span>
+<span class="ln">12 </span>      <span class="name variable">nprocs</span><span class="operator">=</span><span class="literal string backtick">`</span><span class="name builtin">echo</span> <span class="name variable">$line</span><span class="punctuation">|</span>cut -f2 -d<span class="literal string double">&quot; &quot;</span><span class="literal string backtick">`</span>
+<span class="ln">13 </span>      <span class="name builtin">echo</span> <span class="literal string double">&quot;</span><span class="name variable">$host</span><span class="literal string double">:</span><span class="name variable">$nprocs</span><span class="literal string double">&quot;</span>
+<span class="ln">14 </span>   <span class="keyword">done</span>
+<span class="ln">15 </span> <span class="operator">}</span>
+<span class="ln">16 </span> MakeMachineFile <span class="name variable">$PE_HOSTFILE</span> &gt;machines.<span class="name variable">$JOB_ID</span>
+<span class="ln">17 </span>
+<span class="ln">18 </span> mpiexec.hydra --machinefile<span class="operator">=</span>machines.<span class="name variable">$JOB_ID</span> /home/gblades/hello
+<span class="ln">19 </span>
+<span class="ln">20 </span> rm machines.<span class="name variable">$JOB_ID</span>
+</pre>
+<p>( sample file: /home/gblades/wiki/hello.ge ) The directives section
+specifies the computing environment and resources that are needed to do
+the job. Each directive starts with #$. The must be no space before the
+#$ but there is a space after.</p>
+<p>We specify that we want to execute the commands in the current directory
+with the -cwd directive:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1">#$ -cwd</span>
+</pre></div>
+</div>
+<p>We specify the name of the job with the -N directive:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1">#$ -N hello</span>
+</pre></div>
+</div>
+<p>We specify a file for the program to write its output to and we merge
+the standard output and standard error into one stream:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1">#$ -o hello.output -j y</span>
+</pre></div>
+</div>
+<p>We are going to run the program in a parallel environment. We will
+distribute out program over 32 cores. The parallel environment directive
+looks like this:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1">#$ -pe impi 32</span>
+</pre></div>
+</div>
+<p>We specify the job queue:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1">#$ -l qname=all.q</span>
+</pre></div>
+</div>
+<p>We specify that the job have the same environemnt variables as the shell
+in which the job was submitted:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1">#$ -V</span>
+</pre></div>
+</div>
+<p>Submit the job:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span>$ qsub hello.ge
+</pre></div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2017, Paul S.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
