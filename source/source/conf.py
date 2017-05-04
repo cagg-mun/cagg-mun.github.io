@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# CAGG Torngat documentation documentation build configuration file, created by
-# sphinx-quickstart on Wed May  3 12:37:09 2017.
+# CAGG Torngat Documentation documentation build configuration file, created by
+# sphinx-quickstart on Wed May  3 16:55:52 2017.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -32,6 +32,7 @@
 # ones.
 extensions = ['sphinx.ext.todo',
     'sphinx.ext.imgmath',
+    'sphinx.ext.viewcode',
     'sphinx.ext.githubpages']
 
 # Add any paths that contain templates here, relative to this directory.
@@ -47,7 +48,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'CAGG Torngat documentation'
+project = u'CAGG Torngat Documentation'
 copyright = u'2017, Paul S'
 author = u'Paul S'
 
@@ -70,7 +71,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = []
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
@@ -101,7 +102,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'CAGGTorngatdocumentationdoc'
+htmlhelp_basename = 'CAGGTorngatDocumentationdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -128,7 +129,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'CAGGTorngatdocumentation.tex', u'CAGG Torngat documentation Documentation',
+    (master_doc, 'CAGGTorngatDocumentation.tex', u'CAGG Torngat Documentation Documentation',
      u'Paul S', 'manual'),
 ]
 
@@ -138,7 +139,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'caggtorngatdocumentation', u'CAGG Torngat documentation Documentation',
+    (master_doc, 'caggtorngatdocumentation', u'CAGG Torngat Documentation Documentation',
      [author], 1)
 ]
 
@@ -149,8 +150,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'CAGGTorngatdocumentation', u'CAGG Torngat documentation Documentation',
-     author, 'CAGGTorngatdocumentation', 'One line description of project.',
+    (master_doc, 'CAGGTorngatDocumentation', u'CAGG Torngat Documentation Documentation',
+     author, 'CAGGTorngatDocumentation', 'One line description of project.',
      'Miscellaneous'),
 ]
 
