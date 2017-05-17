@@ -6,14 +6,14 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 SPHINXPROJ    = CAGGTorngatDocumentation
 SOURCEDIR     = source
-BUILDDIR      = build
+BUILDDIR      = docs
 
 # Put it first so that "make" without argument is like "make help".
 help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-docs:
-	@$(SPHINXBUILD) -b html "source" "../docs"
+html: Makefile
+	@$(SPHINXBUILD) -b html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 .PHONY: help Makefile
 
