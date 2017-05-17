@@ -1,10 +1,6 @@
 About
 =====
 
-.. image:: fast_marching_3d-1-1s.jpg
-   :scale: 25 %
-   :align: right
-
 The *Computational Applied Geophysics Group* at Memorial University is a
 multi-disciplinary research group whose goals are to develop numerical
 modelling and high-performance computing techniques for all fields of applied
