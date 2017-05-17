@@ -1,0 +1,176 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>To run a program in the Intel MPI environment: &#8212; CAGG Torngat Documentation  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Monitoring Jobs" href="4monitor.html" />
+    <link rel="prev" title="Use the mpi compiler to compile the MPI program (sample program in Section 6):" href="2compile.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="4monitor.html" title="Monitoring Jobs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="2compile.html" title="Use the mpi compiler to compile the MPI program (sample program in Section 6):"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CAGG Torngat Documentation  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >How do I …</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../useimpi.html" accesskey="U">… run Intel MPI programs on Torngat</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="to-run-a-program-in-the-intel-mpi-environment">
+<h1>To run a program in the Intel MPI environment:<a class="headerlink" href="#to-run-a-program-in-the-intel-mpi-environment" title="Permalink to this headline">¶</a></h1>
+<p>Create a script file describing the job:</p>
+<pre class="code bash literal-block">
+<span class="ln"> 1 </span> <span class="comment single">#$ -cwd
+</span><span class="ln"> 2 </span><span class="comment single"></span> <span class="comment single">#$ -N hello
+</span><span class="ln"> 3 </span><span class="comment single"></span> <span class="comment single">#$ -o hello.output -j y
+</span><span class="ln"> 4 </span><span class="comment single"></span> <span class="comment single">#$ -pe impi 32
+</span><span class="ln"> 5 </span><span class="comment single"></span> <span class="comment single">#$ -q all.q
+</span><span class="ln"> 6 </span><span class="comment single"></span> <span class="comment single">#$ -V
+</span><span class="ln"> 7 </span><span class="comment single"></span>
+<span class="ln"> 8 </span> MakeMachineFile<span class="operator">()</span>
+<span class="ln"> 9 </span> <span class="operator">{</span>
+<span class="ln">10 </span>   cat <span class="name variable">$1</span> <span class="punctuation">|</span> <span class="keyword">while</span> <span class="name builtin">read</span> line<span class="punctuation">;</span> <span class="keyword">do</span>
+<span class="ln">11 </span>      <span class="name variable">host</span><span class="operator">=</span><span class="literal string backtick">`</span><span class="name builtin">echo</span> <span class="name variable">$line</span><span class="punctuation">|</span>cut -f1 -d<span class="literal string double">&quot; &quot;</span><span class="punctuation">|</span>cut -f1 -d<span class="literal string double">&quot;.&quot;</span><span class="literal string backtick">`</span>
+<span class="ln">12 </span>      <span class="name variable">nprocs</span><span class="operator">=</span><span class="literal string backtick">`</span><span class="name builtin">echo</span> <span class="name variable">$line</span><span class="punctuation">|</span>cut -f2 -d<span class="literal string double">&quot; &quot;</span><span class="literal string backtick">`</span>
+<span class="ln">13 </span>      <span class="name builtin">echo</span> <span class="literal string double">&quot;</span><span class="name variable">$host</span><span class="literal string double">:</span><span class="name variable">$nprocs</span><span class="literal string double">&quot;</span>
+<span class="ln">14 </span>   <span class="keyword">done</span>
+<span class="ln">15 </span> <span class="operator">}</span>
+<span class="ln">16 </span> MakeMachineFile <span class="name variable">$PE_HOSTFILE</span> &gt;machines.<span class="name variable">$JOB_ID</span>
+<span class="ln">17 </span>
+<span class="ln">18 </span> mpiexec.hydra --machinefile<span class="operator">=</span>machines.<span class="name variable">$JOB_ID</span> /home/gblades/hello
+<span class="ln">19 </span>
+<span class="ln">20 </span> rm machines.<span class="name variable">$JOB_ID</span>
+</pre>
+<p>( sample file: /home/gblades/wiki/hello.ge ) The directives section
+specifies the computing environment and resources that are needed to do
+the job. Each directive starts with #$. The must be no space before the
+#$ but there is a space after.</p>
+<p>We specify that we want to execute the commands in the current directory
+with the -cwd directive:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1">#$ -cwd</span>
+</pre></div>
+</div>
+<p>We specify the name of the job with the -N directive:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1">#$ -N hello</span>
+</pre></div>
+</div>
+<p>We specify a file for the program to write its output to and we merge
+the standard output and standard error into one stream:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1">#$ -o hello.output -j y</span>
+</pre></div>
+</div>
+<p>We are going to run the program in a parallel environment. We will
+distribute out program over 32 cores. The parallel environment directive
+looks like this:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1">#$ -pe impi 32</span>
+</pre></div>
+</div>
+<p>We specify the job queue:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1">#$ -l qname=all.q</span>
+</pre></div>
+</div>
+<p>We specify that the job have the same environemnt variables as the shell
+in which the job was submitted:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1">#$ -V</span>
+</pre></div>
+</div>
+<p>Submit the job:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span>$ qsub hello.ge
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="2compile.html"
+                        title="previous chapter">Use the mpi compiler to compile the MPI program (sample program in Section 6):</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="4monitor.html"
+                        title="next chapter">Monitoring Jobs</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/howdoi/impi/3submit.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="4monitor.html" title="Monitoring Jobs"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="2compile.html" title="Use the mpi compiler to compile the MPI program (sample program in Section 6):"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CAGG Torngat Documentation  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >How do I …</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../useimpi.html" >… run Intel MPI programs on Torngat</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Paul S.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.1.
+    </div>
+  </body>
+</html>

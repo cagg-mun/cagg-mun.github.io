@@ -1,0 +1,230 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>To Do &#8212; CAGG Torngat Documentation  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Paul S - Notes" href="../notes.html" />
+    <link rel="prev" title="Power Cycle Torngat" href="powercycle.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../notes.html" title="Paul S - Notes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="powercycle.html" title="Power Cycle Torngat"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CAGG Torngat Documentation  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">System Information</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="to-do">
+<h1>To Do<a class="headerlink" href="#to-do" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="docutils">
+<colgroup>
+<col width="4%" />
+<col width="2%" />
+<col width="11%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Created</th>
+<th class="head">State</th>
+<th class="head">Task</th>
+<th class="head">Notes</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>2012-06-12 10:37</td>
+<td>45%</td>
+<td>Email</td>
+<td><ul class="first last simple">
+<li>avalon emails work</li>
+<li>relay from torngat (or compute nodes) does not</li>
+<li>11:52, 10 May 2012 (NDT) Emailed Allan to see if he can help debug mail</li>
+<li>10:59, 16 May 2012 (NDT) worked with Allan, needed to change destination for local mails as the alias file doesn’t get used until delivery, fixed logwatch. Root is exempt from rules, needed to remove the exemption. Mail getting tagged as SPAM by NOTFROMMUN rule, Allan added torngat (all of creait really) to whitelist for mail sending</li>
+<li>2012-06-12 11:48 logwatch sent from “logwatch&#64;….” is still being marked as spam</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>2013-07-3 15:26</td>
+<td>0%</td>
+<td>Implement tight integration for MPI and SGE</td>
+<td><ul class="first last">
+<li><p class="first">maglua is the biggest offender</p>
+</li>
+<li><p class="first">Jason has code that recreates the problem</p>
+</li>
+<li><p class="first">MPI problem?</p>
+</li>
+<li><p class="first">The jobs run on ace-net why not on torngat, differential troubleshoot</p>
+</li>
+<li><p class="first">script to clean up errant processes</p>
+</li>
+<li><p class="first">SGE post script</p>
+</li>
+<li><p class="first">for now users can run</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="k">for</span> i in <span class="sb">`</span>seq -f <span class="s1">&#39;%02g&#39;</span> <span class="m">1</span> <span class="m">42</span><span class="sb">`</span><span class="p">;</span> <span class="k">do</span> ssh cn<span class="nv">$i</span> <span class="s1">&#39;pkill -u $USER&#39;</span> <span class="p">;</span> <span class="k">done</span>
+</pre></div>
+</div>
+<p>if they currently have no SGE jobs running</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="k">for</span> i in <span class="sb">`</span>ps --no-headers -ely <span class="p">|</span>awk <span class="s1">&#39;{ if($2 &gt; 1024) print $3 }&#39;</span><span class="sb">`</span><span class="p">;</span> <span class="k">do</span> <span class="nb">kill</span> <span class="nv">$i</span> <span class="p">;</span> <span class="k">done</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">2012-05-17 13:22 enhancing <em>runnodes</em> and converting to python to eliminate need to escape characters that BASH requires</p>
+</li>
+<li><p class="first">2012-06-22 16:33 Not sure if this can be fixed easily, continuing offender is maglua</p>
+</li>
+<li><p class="first">2013-07-3 15:26 previously clean up processes on compute nodes. A parallel environment that has tight integration with MPI should fix this. Check <a class="reference external" href="https://wiki.duke.edu/display/SCSC/Intel+MPI+and+SGE">https://wiki.duke.edu/display/SCSC/Intel+MPI+and+SGE</a> and <a class="reference external" href="http://software.intel.com/en-us/articles/integrating-intel-mpi-sge/">http://software.intel.com/en-us/articles/integrating-intel-mpi-sge/</a> for information</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>2013-07-3 15:26</td>
+<td>20%</td>
+<td>Check UPS shutdown of storage (HP)</td>
+<td><ul class="first last simple">
+<li>Answer: We’re not sure. Keith Hoyles would like to come in and check. <em>Who should he contact?</em></li>
+<li>2012-09-19 14:00 The UPS is not connected to either head node. Need to get this setup and proper shutdown of systems setup.</li>
+<li>2013-07-3 15:26 The UPUS is connected, and the software installed. There are communication issues between the UPS and node. Check the virtual serial port used for iLo, it may be the problem.</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>2013-07-3 15:26</td>
+<td>0%</td>
+<td>Firmware updates of disks and MSA60</td>
+<td><ul class="first last simple">
+<li>Check if there is an easy way to update firmware for the disks and chassis of the MSA60 as well as the P812 controller. Note: System Update Manager (SUM) was discussed during call (Peter)</li>
+<li>Answer – The MSA60 and P812 can be updated in a variety of ways. The most common way is through SUM or SIM (Systems Insight Manager) There is also the possibility to download the firmware individually for most components and run the upgrade manually from commandline. HPSUM would be the preferred method.</li>
+<li>Updates listed as critical fix <a class="reference external" href="http://h20000.www2.hp.com/bizsupport/TechSupport/Document.jsp?objectID=c03468137&amp;jumpid=em_alerts_us-us_Mar13_xbu_all_all_2031514_142775_bladesystemproliantserversstorageoptionsandaccessories_critical_006_0">http://h20000.www2.hp.com/bizsupport/TechSupport/Document.jsp?objectID=c03468137&amp;jumpid=em_alerts_us-us_Mar13_xbu_all_all_2031514_142775_bladesystemproliantserversstorageoptionsandaccessories_critical_006_0</a></li>
+<li>2013-07-3 15:26 Disk firmware update listed as critical for the 600G disks, with a risk of incorrect data reads. Schedule downtime for this update.</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>2013-07-3 15:26</td>
+<td>0%</td>
+<td>SGE Projects Setup</td>
+<td><ul class="first last simple">
+<li>A way to group users and allocate resources</li>
+<li>Read more about project/queue interaction before implementing</li>
+<li>Will be technically challenging to setup.</li>
+<li>2013-07-3 15:26 On hold until management group meets.</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>2013-08-1 10:43</td>
+<td>100%</td>
+<td>Run Linpack on current compute nodes</td>
+<td><ul class="first last simple">
+<li>Compile and run linpack in preparation for new nodes</li>
+<li>2014-01-15 08:37 Completed run before arrival of new nodes. Was able to get 4.99TFLOPS, which matches the original specification for torngat.</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>2014-01-15 08:47</td>
+<td>0%</td>
+<td>Make all iLo static IP</td>
+<td><ul class="first last simple">
+<li>2014-01-15 08:47 New nodes iLo are DHCP dependant, so management is not possible when DHCP server does not respond. Old nodes iLo are independent. Switch to static IP for iLo will allow for management without the need of a system(glauce) being up.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">Fix email on nodes</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="powercycle.html"
+                        title="previous chapter">Power Cycle Torngat</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../notes.html"
+                        title="next chapter">Paul S - Notes</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/systeminfo/todo.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../notes.html" title="Paul S - Notes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="powercycle.html" title="Power Cycle Torngat"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CAGG Torngat Documentation  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >System Information</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Paul S.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.1.
+    </div>
+  </body>
+</html>

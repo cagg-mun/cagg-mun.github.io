@@ -1,0 +1,216 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>… submit a job on Torngat &#8212; CAGG Torngat Documentation  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="… run Intel MPI programs on Torngat" href="useimpi.html" />
+    <link rel="prev" title="… run MATLAB" href="matlab.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="useimpi.html" title="… run Intel MPI programs on Torngat"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="matlab.html" title="… run MATLAB"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CAGG Torngat Documentation  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">How do I …</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="submit-a-job-on-torngat">
+<h1>… submit a job on Torngat<a class="headerlink" href="#submit-a-job-on-torngat" title="Permalink to this headline">¶</a></h1>
+<p>When submitting a job the command qsub is used. The parameters for the
+job can be contained in a submisison script file, or can be included on
+the qsub command line. For additional docs, please see the
+<a class="reference external" href="http://www.ace-net.ca/wiki/SGE#Job_parameters_acenet_information">acenet information</a> <a class="footnote-reference" href="#id1" id="id2">[1]</a>, or check out the
+<a class="reference external" href="http://docs.oracle.com/cd/E24901_01/doc.62/e21976/toc.htm_official_documentation">official documentation</a> <a class="footnote-reference" href="#id3" id="id4">[2]</a>. Keep in mind the official docs are for a newer version
+than torngat currently supports.</p>
+<p>Here are common parameters:</p>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-c<var>wd</var></span></kbd></td>
+<td><p class="first">this will maintain the Current Working Directory. In other words,
+files without a full path specification will be taken from the
+location the job was started</p>
+<p>Script example:</p>
+<p class="last"><code class="docutils literal"><span class="pre">#$</span> <span class="pre">-cwd</span></code></p>
+</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-N</span></kbd></td>
+<td><p class="first">Gives the job a defined name. If this parameter is not given, the
+job name will be the submission script name.</p>
+<p>Script example:</p>
+<p class="last"><code class="docutils literal"><span class="pre">#$</span> <span class="pre">-N</span> <span class="pre">my-job</span></code></p>
+</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-p<var>e</var></span></kbd></td>
+<td><p class="first">Tells the scheduler which parallel environment to use, see
+documentation on <a class="reference internal" href="pickaparallelenvironment.html#pe-configuration"><span class="std std-ref">PE Configuration</span></a> for more information.
+In particular, when using impi, additional glue is
+currently required.
+Script example:</p>
+<p><code class="docutils literal"><span class="pre">#$</span> <span class="pre">-pe</span> <span class="pre">impi</span> <span class="pre">1</span></code></p>
+<ul class="last simple">
+<li>When using the environment <code class="docutils literal"><span class="pre">impi</span></code> a machine file must be
+generated, please see</li>
+</ul>
+</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-q</span></kbd></td>
+<td><p class="first">This has become important as there are now multiple queues on
+torngat, just as on acenet. The general queue to use is sl6.q. This
+queue only has minimal resources. A better queue would be the group
+queue. This can be determined by using the command “id” and looking
+for your supervisor’s group name. Queue names can also be obtained
+by running the command “qstat -g c”, please be sure to only use the
+queue to which you are entitled.</p>
+<p class="last"><code class="docutils literal"><span class="pre">#$</span> <span class="pre">-q</span> <span class="pre">sl6.q</span></code></p>
+</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-j <var>y</var></span></kbd></td>
+<td><p class="first">Joins stdout and stderr. If set to n, the default, then a separate
+file will be used for each output stream.</p>
+<p class="last"><code class="docutils literal"><span class="pre">#$</span> <span class="pre">-j</span> <span class="pre">y</span></code></p>
+</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-o</span></kbd></td>
+<td><p class="first">directs output into the named file. A best practice is to use the
+JOB_ID variable to prevent merging of output from different jobs.</p>
+<p class="last"><code class="docutils literal"><span class="pre">#$</span> <span class="pre">-o</span> <span class="pre">$JOB_ID.out</span></code></p>
+</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-V</span></kbd></td>
+<td><p class="first">(Capital V), keeps any customized environment settings.</p>
+<p class="last"><code class="docutils literal"><span class="pre">#$</span> <span class="pre">-V</span></code></p>
+</td></tr>
+</tbody>
+</table>
+<p>Mail needs to be fixed before these can be used</p>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-M</span></kbd></td>
+<td><p class="first">Send email about the job to this addresss</p>
+<p class="last"><code class="docutils literal"><span class="pre">#$</span> <span class="pre">-M</span> <span class="pre">cagg-systems&#64;mun.ca</span></code></p>
+</td></tr>
+</tbody>
+</table>
+<ol class="arabic">
+<li><p class="first">$ -m</p>
+<blockquote>
+<div><p>Choose when to send mail. For example to send mail when the job
+starts and ends</p>
+<p><code class="docutils literal"><span class="pre">#$</span> <span class="pre">-m</span> <span class="pre">be</span></code></p>
+</div></blockquote>
+</li>
+</ol>
+<table class="docutils footnote" frame="void" id="id1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td><a class="reference external" href="http://www.ace-net.ca/wiki/SGE#Job_parameters_acenet_information">http://www.ace-net.ca/wiki/SGE#Job_parameters_acenet_information</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[2]</a></td><td><a class="reference external" href="http://docs.oracle.com/cd/E24901_01/doc.62/e21976/toc.htm_official_documentation">http://docs.oracle.com/cd/E24901_01/doc.62/e21976/toc.htm_official_documentation</a></td></tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="matlab.html"
+                        title="previous chapter">… run MATLAB</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="useimpi.html"
+                        title="next chapter">… run Intel MPI programs on Torngat</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/howdoi/submit.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="useimpi.html" title="… run Intel MPI programs on Torngat"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="matlab.html" title="… run MATLAB"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CAGG Torngat Documentation  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >How do I …</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Paul S.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.1.
+    </div>
+  </body>
+</html>
