@@ -6,10 +6,8 @@
     
     <title>… submit a job on Torngat &#8212; CAGG Torngat Documentation  documentation</title>
     
-    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.6/yeti/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -148,27 +146,27 @@ than torngat currently supports.</p>
 <tbody valign="top">
 <tr><td class="option-group">
 <kbd><span class="option">-c<var>wd</var></span></kbd></td>
-<td><p class="first">this will maintain the Current Working Directory. In other words,
+<td><p class="first">This will maintain the Current Working Directory. In other words,
 files without a full path specification will be taken from the
 location the job was started</p>
-<p>Script example:</p>
-<p class="last"><code class="docutils literal"><span class="pre">#$</span> <span class="pre">-cwd</span></code></p>
+<p class="last">Script example:
+<code class="docutils literal"><span class="pre">#$</span> <span class="pre">-cwd</span></code></p>
 </td></tr>
 <tr><td class="option-group">
 <kbd><span class="option">-N</span></kbd></td>
 <td><p class="first">Gives the job a defined name. If this parameter is not given, the
 job name will be the submission script name.</p>
-<p>Script example:</p>
-<p class="last"><code class="docutils literal"><span class="pre">#$</span> <span class="pre">-N</span> <span class="pre">my-job</span></code></p>
+<p class="last">Script example:
+<code class="docutils literal"><span class="pre">#$</span> <span class="pre">-N</span> <span class="pre">my-job</span></code></p>
 </td></tr>
 <tr><td class="option-group">
 <kbd><span class="option">-p<var>e</var></span></kbd></td>
 <td><p class="first">Tells the scheduler which parallel environment to use, see
 documentation on <a class="reference internal" href="pickaparallelenvironment.html#pe-configuration"><span class="std std-ref">PE Configuration</span></a> for more information.
 In particular, when using impi, additional glue is
-currently required.
-Script example:</p>
-<p><code class="docutils literal"><span class="pre">#$</span> <span class="pre">-pe</span> <span class="pre">impi</span> <span class="pre">1</span></code></p>
+currently required.</p>
+<p>Script example:
+<code class="docutils literal"><span class="pre">#$</span> <span class="pre">-pe</span> <span class="pre">impi</span> <span class="pre">1</span></code></p>
 <ul class="last simple">
 <li>When using the environment <code class="docutils literal"><span class="pre">impi</span></code> a machine file must be
 generated, please see</li>
@@ -183,48 +181,44 @@ queue. This can be determined by using the command “id” and looking
 for your supervisor’s group name. Queue names can also be obtained
 by running the command “qstat -g c”, please be sure to only use the
 queue to which you are entitled.</p>
-<p class="last"><code class="docutils literal"><span class="pre">#$</span> <span class="pre">-q</span> <span class="pre">sl6.q</span></code></p>
+<p class="last">Script example:
+<code class="docutils literal"><span class="pre">#$</span> <span class="pre">-q</span> <span class="pre">sl6.q</span></code></p>
 </td></tr>
 <tr><td class="option-group">
 <kbd><span class="option">-j <var>y</var></span></kbd></td>
 <td><p class="first">Joins stdout and stderr. If set to n, the default, then a separate
 file will be used for each output stream.</p>
-<p class="last"><code class="docutils literal"><span class="pre">#$</span> <span class="pre">-j</span> <span class="pre">y</span></code></p>
+<p class="last">Script example:
+<code class="docutils literal"><span class="pre">#$</span> <span class="pre">-j</span> <span class="pre">y</span></code></p>
 </td></tr>
 <tr><td class="option-group">
 <kbd><span class="option">-o</span></kbd></td>
 <td><p class="first">directs output into the named file. A best practice is to use the
 JOB_ID variable to prevent merging of output from different jobs.</p>
-<p class="last"><code class="docutils literal"><span class="pre">#$</span> <span class="pre">-o</span> <span class="pre">$JOB_ID.out</span></code></p>
+<p class="last">Script example:
+<code class="docutils literal"><span class="pre">#$</span> <span class="pre">-o</span> <span class="pre">$JOB_ID.out</span></code></p>
 </td></tr>
 <tr><td class="option-group">
 <kbd><span class="option">-V</span></kbd></td>
 <td><p class="first">(Capital V), keeps any customized environment settings.</p>
-<p class="last"><code class="docutils literal"><span class="pre">#$</span> <span class="pre">-V</span></code></p>
+<p class="last">Script example:
+<code class="docutils literal"><span class="pre">#$</span> <span class="pre">-V</span></code></p>
 </td></tr>
-</tbody>
-</table>
-<p>Mail needs to be fixed before these can be used</p>
-<table class="docutils option-list" frame="void" rules="none">
-<col class="option" />
-<col class="description" />
-<tbody valign="top">
 <tr><td class="option-group">
 <kbd><span class="option">-M</span></kbd></td>
-<td><p class="first">Send email about the job to this addresss</p>
-<p class="last"><code class="docutils literal"><span class="pre">#$</span> <span class="pre">-M</span> <span class="pre">cagg-systems&#64;mun.ca</span></code></p>
+<td><p class="first">Send email about the job to this address</p>
+<p class="last">Script example:
+<code class="docutils literal"><span class="pre">#$</span> <span class="pre">-M</span> <span class="pre">cagg-systems&#64;mun.ca</span></code></p>
+</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-m <var>&lt;b|e|a|s|n&gt;</var></span></kbd></td>
+<td><p class="first">Choose when to send mail. For example to send mail when the job
+starts and ends</p>
+<p class="last">Script example:
+<code class="docutils literal"><span class="pre">#$</span> <span class="pre">-m</span> <span class="pre">be</span></code></p>
 </td></tr>
 </tbody>
 </table>
-<ol class="arabic">
-<li><p class="first">$ -m</p>
-<blockquote>
-<div><p>Choose when to send mail. For example to send mail when the job
-starts and ends</p>
-<p><code class="docutils literal"><span class="pre">#$</span> <span class="pre">-m</span> <span class="pre">be</span></code></p>
-</div></blockquote>
-</li>
-</ol>
 <table class="docutils footnote" frame="void" id="id1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">

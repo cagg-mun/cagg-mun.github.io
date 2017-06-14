@@ -6,10 +6,8 @@
     
     <title>To run a program in the Intel MPI environment: &#8212; CAGG Torngat Documentation  documentation</title>
     
-    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootswatch-3.3.6/yeti/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -32,7 +30,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Monitoring Jobs" href="4monitor.html" />
-    <link rel="prev" title="Use the mpi compiler to compile the MPI program (sample program in Section 6):" href="2compile.html" />
+    <link rel="prev" title="Use the mpi compiler to compile the MPI program" href="2compile.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -85,7 +83,10 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">To run a program in the Intel MPI environment:</a></li>
+<li><a class="reference internal" href="#">To run a program in the Intel MPI environment:</a><ul>
+<li><a class="reference internal" href="#create-a-script-file-describing-the-job">Create a script file describing the job:</a></li>
+</ul>
+</li>
 </ul>
 </ul>
 </li>
@@ -95,7 +96,7 @@
               
                 
   <li>
-    <a href="2compile.html" title="Previous Chapter: Use the mpi compiler to compile the MPI program (sample program in Section 6):"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Use the mpi c...</span>
+    <a href="2compile.html" title="Previous Chapter: Use the mpi compiler to compile the MPI program"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Use the mpi c...</span>
     </a>
   </li>
   <li>
@@ -135,65 +136,86 @@
       
   <div class="section" id="to-run-a-program-in-the-intel-mpi-environment">
 <h1>To run a program in the Intel MPI environment:<a class="headerlink" href="#to-run-a-program-in-the-intel-mpi-environment" title="Permalink to this headline">¶</a></h1>
-<p>Create a script file describing the job:</p>
-<pre class="code bash literal-block">
-<span class="ln"> 1 </span> <span class="comment single">#$ -cwd
-</span><span class="ln"> 2 </span><span class="comment single"></span> <span class="comment single">#$ -N hello
-</span><span class="ln"> 3 </span><span class="comment single"></span> <span class="comment single">#$ -o hello.output -j y
-</span><span class="ln"> 4 </span><span class="comment single"></span> <span class="comment single">#$ -pe impi 32
-</span><span class="ln"> 5 </span><span class="comment single"></span> <span class="comment single">#$ -q all.q
-</span><span class="ln"> 6 </span><span class="comment single"></span> <span class="comment single">#$ -V
-</span><span class="ln"> 7 </span><span class="comment single"></span>
-<span class="ln"> 8 </span> MakeMachineFile<span class="operator">()</span>
-<span class="ln"> 9 </span> <span class="operator">{</span>
-<span class="ln">10 </span>   cat <span class="name variable">$1</span> <span class="punctuation">|</span> <span class="keyword">while</span> <span class="name builtin">read</span> line<span class="punctuation">;</span> <span class="keyword">do</span>
-<span class="ln">11 </span>      <span class="name variable">host</span><span class="operator">=</span><span class="literal string backtick">`</span><span class="name builtin">echo</span> <span class="name variable">$line</span><span class="punctuation">|</span>cut -f1 -d<span class="literal string double">&quot; &quot;</span><span class="punctuation">|</span>cut -f1 -d<span class="literal string double">&quot;.&quot;</span><span class="literal string backtick">`</span>
-<span class="ln">12 </span>      <span class="name variable">nprocs</span><span class="operator">=</span><span class="literal string backtick">`</span><span class="name builtin">echo</span> <span class="name variable">$line</span><span class="punctuation">|</span>cut -f2 -d<span class="literal string double">&quot; &quot;</span><span class="literal string backtick">`</span>
-<span class="ln">13 </span>      <span class="name builtin">echo</span> <span class="literal string double">&quot;</span><span class="name variable">$host</span><span class="literal string double">:</span><span class="name variable">$nprocs</span><span class="literal string double">&quot;</span>
-<span class="ln">14 </span>   <span class="keyword">done</span>
-<span class="ln">15 </span> <span class="operator">}</span>
-<span class="ln">16 </span> MakeMachineFile <span class="name variable">$PE_HOSTFILE</span> &gt;machines.<span class="name variable">$JOB_ID</span>
-<span class="ln">17 </span>
-<span class="ln">18 </span> mpiexec.hydra --machinefile<span class="operator">=</span>machines.<span class="name variable">$JOB_ID</span> /home/gblades/hello
-<span class="ln">19 </span>
-<span class="ln">20 </span> rm machines.<span class="name variable">$JOB_ID</span>
-</pre>
+<div class="section" id="create-a-script-file-describing-the-job">
+<h2>Create a script file describing the job:<a class="headerlink" href="#create-a-script-file-describing-the-job" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="c1">#$ -cwd</span>
+ <span class="c1">#$ -N hello</span>
+ <span class="c1">#$ -o hello.output -j y</span>
+ <span class="c1">#$ -pe impi 32</span>
+ <span class="c1">#$ -q all.q</span>
+ <span class="c1">#$ -V</span>
+
+ MakeMachineFile<span class="o">()</span>
+ <span class="o">{</span>
+   cat <span class="nv">$1</span> <span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> line<span class="p">;</span> <span class="k">do</span>
+      <span class="nv">host</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$line</span><span class="p">|</span>cut -f1 -d<span class="s2">&quot; &quot;</span><span class="p">|</span>cut -f1 -d<span class="s2">&quot;.&quot;</span><span class="sb">`</span>
+      <span class="nv">nprocs</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$line</span><span class="p">|</span>cut -f2 -d<span class="s2">&quot; &quot;</span><span class="sb">`</span>
+      <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$host</span><span class="s2">:</span><span class="nv">$nprocs</span><span class="s2">&quot;</span>
+   <span class="k">done</span>
+ <span class="o">}</span>
+ MakeMachineFile <span class="nv">$PE_HOSTFILE</span> &gt;machines.<span class="nv">$JOB_ID</span>
+
+ mpiexec.hydra --machinefile<span class="o">=</span>machines.<span class="nv">$JOB_ID</span> /home/gblades/hello
+
+ rm machines.<span class="nv">$JOB_ID</span>
+</pre></div>
+</td></tr></table></div>
 <p>( sample file: /home/gblades/wiki/hello.ge ) The directives section
 specifies the computing environment and resources that are needed to do
-the job. Each directive starts with #$. The must be no space before the
-#$ but there is a space after.</p>
+the job. Each directive starts with <code class="docutils literal"><span class="pre">#$</span></code>. The must be no space before the
+<code class="docutils literal"><span class="pre">#$</span></code> but there is a space after.</p>
 <p>We specify that we want to execute the commands in the current directory
 with the -cwd directive:</p>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1">#$ -cwd</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1">#$ -cwd</span>
 </pre></div>
 </div>
 <p>We specify the name of the job with the -N directive:</p>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1">#$ -N hello</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1">#$ -N hello</span>
 </pre></div>
 </div>
 <p>We specify a file for the program to write its output to and we merge
 the standard output and standard error into one stream:</p>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1">#$ -o hello.output -j y</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1">#$ -o hello.output -j y</span>
 </pre></div>
 </div>
 <p>We are going to run the program in a parallel environment. We will
 distribute out program over 32 cores. The parallel environment directive
 looks like this:</p>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1">#$ -pe impi 32</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1">#$ -pe impi 32</span>
 </pre></div>
 </div>
 <p>We specify the job queue:</p>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1">#$ -l qname=all.q</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1">#$ -l qname=all.q</span>
 </pre></div>
 </div>
 <p>We specify that the job have the same environemnt variables as the shell
 in which the job was submitted:</p>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1">#$ -V</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1">#$ -V</span>
 </pre></div>
 </div>
 <p>Submit the job:</p>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>$ qsub hello.ge
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ qsub hello.ge
 </pre></div>
+</div>
 </div>
 </div>
 

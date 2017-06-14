@@ -20,9 +20,5 @@ Cluster documentation
    notes
 
 
-Indices and tables
-******************
-
-* :ref:`genindex`
 * :ref:`search`
 

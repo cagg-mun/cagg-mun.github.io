@@ -1,5 +1,7 @@
-Use the mpi compiler to compile the MPI program (sample program in `Section 6`_):
----------------------------------------------------------------------------------
+Use the mpi compiler to compile the MPI program
+===============================================
+See Sample program
+------------------
 
 Compile C program:
 """"""""""""""""""
@@ -25,12 +27,13 @@ Compile Fortran program:
 (also: mpif77, mpif90)
 
 Switches on the command line are passed to the underlying compiler.
+*******************************************************************
 
 Example:
 
 .. code-block:: bash
 
-    $ mpicc hello.f -o hello -O2 -lm
+    $ mpicc hello.c -o hello -O2 -lm
 
 .. _Section 6: IMPI/Sample_MPI_program
 

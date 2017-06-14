@@ -6,10 +6,8 @@
     
     <title>… pick a parallel environment &#8212; CAGG Torngat Documentation  documentation</title>
     
-    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.6/yeti/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -164,18 +162,22 @@ job has stopped.</dd>
 <dt>allocation_rule</dt>
 <dd><p class="first">Currently the most important setting available, this controls the
 mechanism used to allocate (CPU)-slots are allocated to the job.</p>
-<dl class="last docutils">
-<dt>Integer value</dt>
-<dd>For an integer value, the number of slots/host is defined and
-must be exactly the number.</dd>
-<dt>$fill_up</dt>
-<dd>allocates slots on a host until no more slots remain on the
-host, then “fills up” another host</dd>
-<dt>$round_robin</dt>
-<dd>allocates slots a host at a time, each slot is allocated on a
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">integer value:</th><td class="field-body">For an integer value, the number of slots/host is defined and
+must be exactly the number.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">$fill_up:</th><td class="field-body">allocates slots on a host until no more slots remain on the
+host, then “fills up” another host</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">$round_robin:</th><td class="field-body">allocates slots a host at a time, each slot is allocated on a
 new host until all hosts are used, then slots are allocated
-again on hosts with available slots</dd>
-</dl>
+again on hosts with available slots</td>
+</tr>
+</tbody>
+</table>
 </dd>
 <dt>control_slaves</dt>
 <dd>This defines whether the processes controlled by the grid engine
@@ -206,11 +208,9 @@ with available slots</dd>
 <dt>impi</dt>
 <dd><p class="first">Probably the best general use PE, allocates all slots on a node
 until the node is full (see $fill_up above)</p>
-<p class="last">Currently when using impi, an execution host file must be built, to
+<p>Currently when using impi, an execution host file must be built, to
 build the file insert the following into the job submission script</p>
-</dd>
-</dl>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># make host file</span>
+<div class="last highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># make host file</span>
 MakeMachineFile<span class="o">()</span>
 <span class="o">{</span>
     cat <span class="nv">$1</span> <span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> line<span class="p">;</span> <span class="k">do</span>
@@ -222,7 +222,7 @@ MakeMachineFile<span class="o">()</span>
 MakeMachineFile <span class="nv">$PE_HOSTFILE</span> &gt;machines.<span class="nv">$JOB_ID</span>
 </pre></div>
 </div>
-<dl class="docutils">
+</dd>
 <dt>ompi</dt>
 <dd>A copy of impi</dd>
 <dt>make</dt>

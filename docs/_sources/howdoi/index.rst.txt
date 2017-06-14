@@ -2,8 +2,9 @@ How do I ...
 ************
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    
+   petsc
    getatorngataccount
    transferdatatoacenet
    pickaparallelenvironment

@@ -6,10 +6,8 @@
     
     <title>… transfer data to/from ACE-net &#8212; CAGG Torngat Documentation  documentation</title>
     
-    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.6/yeti/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -143,13 +141,11 @@
 <ul class="simple">
 <li>Log into placentia</li>
 <li>To transfer placentia –&gt; torngat<ul>
-<li><code class="docutils literal"><span class="pre">scp</span></code> <code class="docutils literal"><span class="pre">&lt;source</span></code> <code class="docutils literal"><span class="pre">file(s)&gt;</span></code> <code class="docutils literal"><span class="pre">styx.ace-net.ca:&lt;destination</span></code>
-<code class="docutils literal"><span class="pre">directory&gt;</span></code></li>
+<li><code class="docutils literal"><span class="pre">scp</span> <span class="pre">&lt;source</span> <span class="pre">file(s)&gt;</span> <span class="pre">styx.ace-net.ca:&lt;destination</span> <span class="pre">directory&gt;</span></code></li>
 </ul>
 </li>
 <li>To transfer torngat –&gt; placentia<ul>
-<li><code class="docutils literal"><span class="pre">scp</span></code> <code class="docutils literal"><span class="pre">styx.ace-net.ca:&lt;source</span></code> <code class="docutils literal"><span class="pre">file(s)&gt;</span></code> <code class="docutils literal"><span class="pre">&lt;destination</span></code>
-<code class="docutils literal"><span class="pre">directory&gt;</span></code></li>
+<li><code class="docutils literal"><span class="pre">scp</span> <span class="pre">styx.ace-net.ca:&lt;source</span> <span class="pre">file(s)&gt;</span> <span class="pre">&lt;destination</span> <span class="pre">directory&gt;</span></code></li>
 </ul>
 </li>
 </ul>
@@ -159,7 +155,7 @@
 <li>to perform the transfer without a password, append the ace-net
 account public key to torngat’s authorized_keys<ul>
 <li>open two terminals, one on torngat, one on placentia</li>
-<li>on placentia <code class="docutils literal"><span class="pre">cat</span></code> <code class="docutils literal"><span class="pre">~/.ssh/id_rsa.pub</span></code><ul>
+<li>on placentia <code class="docutils literal"><span class="pre">cat</span> <span class="pre">~/.ssh/id_rsa.pub</span></code><ul>
 <li>copy the lines that are output</li>
 </ul>
 </li>

@@ -19,8 +19,7 @@ Access instructions
 
 #. ``ssh`` to torngat. Be sure to use the ``-X`` option if you want to
    run the MATLAB desktop, or do any plotting.
-#. from the head node on torngat, run the command: ``qrsh -q
-   -pe 12per 12 'matlab'``
+#. from the head node on torngat, run the command: ``qrsh -q -pe 12per 12 'matlab'``
 
    -  for example ``qrsh -q rhaynes.q -pe 12per 12 'matlab'``
 
@@ -31,7 +30,7 @@ Parallel computing in MATLAB
 ----------------------------
 
 The parallel computing toolbox is installed on torngat. For help
-documentation, simply type ``doc`` ``distcomp`` on the MATLAB command
+documentation, simply type ``doc distcomp`` on the MATLAB command
 line.
 
 .. target-notes::

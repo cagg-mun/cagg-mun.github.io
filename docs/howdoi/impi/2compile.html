@@ -4,12 +4,10 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Use the mpi compiler to compile the MPI program (sample program in Section 6): &#8212; CAGG Torngat Documentation  documentation</title>
+    <title>Use the mpi compiler to compile the MPI program &#8212; CAGG Torngat Documentation  documentation</title>
     
-    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootswatch-3.3.6/yeti/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -32,7 +30,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="To run a program in the Intel MPI environment:" href="3submit.html" />
-    <link rel="prev" title="Use the mpi selector facility to set the MPI version to Intel MPI." href="1selectmpi.html" />
+    <link rel="prev" title="Select MPI version" href="1selectmpi.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -85,10 +83,16 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Use the mpi compiler to compile the MPI program (sample program in Section 6):</a><ul>
+<li><a class="reference internal" href="#">Use the mpi compiler to compile the MPI program</a><ul>
+<li><a class="reference internal" href="#see-sample-program">See Sample program</a><ul>
 <li><a class="reference internal" href="#compile-c-program">Compile C program:</a></li>
 <li><a class="reference internal" href="#compile-c-c-program">Compile C/C++ program:</a></li>
-<li><a class="reference internal" href="#compile-fortran-program">Compile Fortran program:</a></li>
+<li><a class="reference internal" href="#compile-fortran-program">Compile Fortran program:</a><ul>
+<li><a class="reference internal" href="#switches-on-the-command-line-are-passed-to-the-underlying-compiler">Switches on the command line are passed to the underlying compiler.</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -100,7 +104,7 @@
               
                 
   <li>
-    <a href="1selectmpi.html" title="Previous Chapter: Use the mpi selector facility to set the MPI version to Intel MPI."><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Use the mpi s...</span>
+    <a href="1selectmpi.html" title="Previous Chapter: Select MPI version"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Select MPI version</span>
     </a>
   </li>
   <li>
@@ -138,30 +142,35 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="use-the-mpi-compiler-to-compile-the-mpi-program-sample-program-in-section-6">
-<h1>Use the mpi compiler to compile the MPI program (sample program in <a class="reference external" href="IMPI/Sample_MPI_program">Section 6</a>):<a class="headerlink" href="#use-the-mpi-compiler-to-compile-the-mpi-program-sample-program-in-section-6" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="use-the-mpi-compiler-to-compile-the-mpi-program">
+<h1>Use the mpi compiler to compile the MPI program<a class="headerlink" href="#use-the-mpi-compiler-to-compile-the-mpi-program" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="see-sample-program">
+<h2>See Sample program<a class="headerlink" href="#see-sample-program" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="compile-c-program">
-<h2>Compile C program:<a class="headerlink" href="#compile-c-program" title="Permalink to this headline">¶</a></h2>
+<h3>Compile C program:<a class="headerlink" href="#compile-c-program" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>$ mpicc hello.c  -o hello
 </pre></div>
 </div>
 </div>
 <div class="section" id="compile-c-c-program">
-<h2>Compile C/C++ program:<a class="headerlink" href="#compile-c-c-program" title="Permalink to this headline">¶</a></h2>
+<h3>Compile C/C++ program:<a class="headerlink" href="#compile-c-c-program" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>$ mpic++ hello.cpp  -o hello
 </pre></div>
 </div>
 </div>
 <div class="section" id="compile-fortran-program">
-<h2>Compile Fortran program:<a class="headerlink" href="#compile-fortran-program" title="Permalink to this headline">¶</a></h2>
+<h3>Compile Fortran program:<a class="headerlink" href="#compile-fortran-program" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>$ mpifc hello.f  -o hello
 </pre></div>
 </div>
 <p>(also: mpif77, mpif90)</p>
-<p>Switches on the command line are passed to the underlying compiler.</p>
+<div class="section" id="switches-on-the-command-line-are-passed-to-the-underlying-compiler">
+<h4>Switches on the command line are passed to the underlying compiler.<a class="headerlink" href="#switches-on-the-command-line-are-passed-to-the-underlying-compiler" title="Permalink to this headline">¶</a></h4>
 <p>Example:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ mpicc hello.f -o hello -O2 -lm
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ mpicc hello.c -o hello -O2 -lm
 </pre></div>
+</div>
+</div>
 </div>
 </div>
 </div>

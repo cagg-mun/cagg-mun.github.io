@@ -10,75 +10,69 @@ than torngat currently supports.
 
 Here are common parameters:
 
--cwd
-         this will maintain the Current Working Directory. In other words,
+-cwd     This will maintain the Current Working Directory. In other words,
          files without a full path specification will be taken from the
          location the job was started
 
          Script example:
-
          ``#$ -cwd``
 
--N    Gives the job a defined name. If this parameter is not given, the
-      job name will be the submission script name.
+-N       Gives the job a defined name. If this parameter is not given, the
+         job name will be the submission script name.
 
-      Script example:
+         Script example:
+         ``#$ -N my-job``
 
-      ``#$ -N my-job``
+-pe      Tells the scheduler which parallel environment to use, see
+         documentation on :ref:`pe configuration` for more information.
+         In particular, when using impi, additional glue is
+         currently required.
 
--pe
-      Tells the scheduler which parallel environment to use, see
-      documentation on :ref:`pe configuration` for more information.
-      In particular, when using impi, additional glue is
-      currently required.
-      Script example:
+         Script example:
+         ``#$ -pe impi 1``
 
-      ``#$ -pe impi 1``
+         - When using the environment ``impi`` a machine file must be
+           generated, please see
 
-      - When using the environment ``impi`` a machine file must be
-        generated, please see
+-q       This has become important as there are now multiple queues on
+         torngat, just as on acenet. The general queue to use is sl6.q. This
+         queue only has minimal resources. A better queue would be the group
+         queue. This can be determined by using the command “id” and looking
+         for your supervisor's group name. Queue names can also be obtained
+         by running the command “qstat -g c”, please be sure to only use the
+         queue to which you are entitled.
 
--q
-      This has become important as there are now multiple queues on
-      torngat, just as on acenet. The general queue to use is sl6.q. This
-      queue only has minimal resources. A better queue would be the group
-      queue. This can be determined by using the command “id” and looking
-      for your supervisor's group name. Queue names can also be obtained
-      by running the command “qstat -g c”, please be sure to only use the
-      queue to which you are entitled.
+         Script example:
+         ``#$ -q sl6.q``
 
-      ``#$ -q sl6.q``
+-j y     Joins stdout and stderr. If set to n, the default, then a separate
+         file will be used for each output stream.
 
--j y
-      Joins stdout and stderr. If set to n, the default, then a separate
-      file will be used for each output stream.
+         Script example:
+         ``#$ -j y``
 
-      ``#$ -j y``
+-o       directs output into the named file. A best practice is to use the
+         JOB\_ID variable to prevent merging of output from different jobs.
 
--o
-      directs output into the named file. A best practice is to use the
-      JOB\_ID variable to prevent merging of output from different jobs.
+         Script example:
+         ``#$ -o $JOB_ID.out``
 
-      ``#$ -o $JOB_ID.out``
+-V       (Capital V), keeps any customized environment settings.
 
--V
-      (Capital V), keeps any customized environment settings.
+         Script example:
+         ``#$ -V``
 
-      ``#$ -V``
+-M       Send email about the job to this address
 
-Mail needs to be fixed before these can be used
+         Script example:
+         ``#$ -M cagg-systems@mun.ca``
 
--M
-      Send email about the job to this addresss
+-m <b|e|a|s|n>
+         Choose when to send mail. For example to send mail when the job
+         starts and ends
 
-      ``#$ -M cagg-systems@mun.ca``
-
-#. $ -m
-
-    Choose when to send mail. For example to send mail when the job
-    starts and ends
-
-    ``#$ -m be``
+         Script example:
+         ``#$ -m be``
 
 .. target-notes::
 

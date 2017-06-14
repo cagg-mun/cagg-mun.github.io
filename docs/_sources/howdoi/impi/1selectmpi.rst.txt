@@ -1,3 +1,6 @@
+Select MPI version
+==================
+
 Use the mpi selector facility to set the MPI version to Intel MPI.
 ------------------------------------------------------------------
 

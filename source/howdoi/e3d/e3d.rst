@@ -1,8 +1,7 @@
 ... run E3d on Torngat
 ======================
-How to run
-E3d
-on Torngat
+How to run E3d on Torngat
+-------------------------
 08 Jan 2013
 
 This note describes how to run E3d on the Torngat cluster.
@@ -21,45 +20,40 @@ grid is defined in a left handed coordinate system (positive z axis pointing dow
 The input parameter file is an ascii (text) file containing a series of commands. Each command consists
 of a keyword followed by one or more parameter-value pairs. The basic commands are as follows:
 
-**grid:**
+grid
    specifies the grid dimensions and boundary conditions
 
-**time:**
+time
    specifies the simulation time, step interval
 
-**source:**
+source
    specifies the source location, source waveform, source time delay
 
-**block:**
+block
    specifies the velocity, density for a specified block of the grid
 
-**parallel:**
+parallel
    specifies the partitioning of the model grid for parallelization
 
-**traces:**
+traces
    specifies the geometry of the receivers for a seismic line
 
 The grid command specifies the geometry and boundary conditions of the model. The basic parameters
 are as follows:
 
-    l:
-       the number of grid points in the y direction [required]
-    m:
-       the number of grid points in the z direction [required]
-    n:
-       the number of grid points in the x direction [required]
-    dh:
-       the grid point spacing in all directions (in kilometers)
-    b:
-       grid boundary conditions
-       
-       1 = reflecting
-       
-       2 = absorbing
-       
-       3 = surface [default]
-       
-       4 = surface modified for acoustic instabilities
+:l:         the number of grid points in the y direction [required]
+:m:         the number of grid points in the z direction [required]
+:n:         the number of grid points in the x direction [required]
+:dh:        the grid point spacing in all directions (in kilometers)
+:b:         grid boundary conditions
+
+            1 = reflecting
+
+            2 = absorbing
+
+            3 = surface [default]
+
+            4 = surface modified for acoustic instabilities
 
 To demonstrate how to use E3d we consider an earth model which is 1 kilometer by 1 kilometer by 1
 kilometer (a cube). We will set the grid point spacing to 2.5 meters. The grid dimensions are thus 401
@@ -73,10 +67,11 @@ which is the default so we do not need to specify it explicitly. The grid comman
 Note there must not be any spaces on either side of the equal signs.
 
 The time command time simulation time and the simulation time step interval. The basic parameters
-are as follows::
+are as follows:
 
-   t: number of time-steps [required]
-   dt: time-stepping increment (seconds) [required]
+:t:         number of time-steps [required]
+:dt:        time-stepping increment (seconds) [required]
+
 
 We will set up the job to solve the wave equation for a time duration of ½ second. We choose a time
 step size of 0.2 milliseconds. 2500 time steps are required for a time duration of ½ second.
@@ -85,24 +80,32 @@ The time command will look like this::
 
    time t=2500 dt=0.000200
 
-The source command describes the source function and position. The basic parameters are as follows::
+The source command describes the source function and position. The basic parameters are as follows:
 
-    type: source type [required]
-        1=P wave
-        2=S wave
-        4=Moment Tensor
-        5=Force
-        6=Fault (point source)
-        7=Fault (finite length)
-        8=Distributed Slip (from file)
-        9=Distributed Slip (from file with rise-times)
+:type:      source type [required]
 
-    amp: amplitude of source (in dyne-cm) [required]
-    freq: central frequency of source in Hz [default = 1.0]
-    t0: shift in start time of the source in seconds [default = 0]
-    x: x position of source (kilometers) [default = center of grid]
-    y: y position of source (kilometers) [default = center of grid]
-    z: z position of source (kilometers) [default = center of grid]
+            1=P wave
+
+            2=S wave
+
+            4=Moment Tensor
+
+            5=Force
+
+            6=Fault (point source)
+
+            7=Fault (finite length)
+
+            8=Distributed Slip (from file)
+
+            9=Distributed Slip (from file with rise-times)
+
+:amp:       amplitude of source (in dyne-cm) [required]
+:freq:      central frequency of source in Hz [default = 1.0]
+:t0:        shift in start time of the source in seconds [default = 0]
+:x:         x position of source (kilometers) [default = center of grid]
+:y:         y position of source (kilometers) [default = center of grid]
+:z:         z position of source (kilometers) [default = center of grid]
 
 For our example we choose to position the source on the surface in the center of the model.
 
@@ -119,17 +122,17 @@ minimize ringing so we set t=0.025. The source command will look like this::
    source type=1 amp=1.e27 freq=40.0 t0=0.025 x=0.500 y=0.500 z=0.000
 
 The block command describes the velocity, density and attenuation of the model at each grid point
-within a specified block (sub-region) of the grid. The basic parameters are as follows::
+within a specified block (sub-region) of the grid. The basic parameters are as follows:
 
-    p: p-wave velocity (km/sec) [default = none]
-    s: s-wave velocity (km/sec) [default = none]
-    r: density (g/cm**3) [default = none]
-    l1: index of first grid point of block element in y dimension [ default = 0]
-    l2: index of last grid point of block element in y dimension [default = end of grid]
-    m1: index of first grid point of block element in z dimension [default = 0]
-    m2: index of last grid point of block element in z dimension [default = end of grid]
-    n1: index of first grid point of block element in x dimension [default = 0]
-    n2: index of last grid point of block element in x dimension [default = end of grid]
+:p:         p-wave velocity (km/sec) [default = none]
+:s:         s-wave velocity (km/sec) [default = none]
+:r:         density (g/cm**3) [default = none]
+:l1:        index of first grid point of block element in y dimension [ default = 0]
+:l2:        index of last grid point of block element in y dimension [default = end of grid]
+:m1:        index of first grid point of block element in z dimension [default = 0]
+:m2:        index of last grid point of block element in z dimension [default = end of grid]
+:n1:        index of first grid point of block element in x dimension [default = 0]
+:n2:        index of last grid point of block element in x dimension [default = end of grid]
 
 We choose a simple two layer model for the purpose of demonstrating how to specify the model.
 
@@ -158,16 +161,17 @@ second block overwrote the lower half of the background defined in the first blo
 E3D can simulate the seismic signal at specified receiver locations in the grid.
 
 E3D can simulate the seismic signal at specified receiver locations in the grid.
-The traces command is used to specify a line of receivers. The basic parameters are as follows ::
+The traces command is used to specify a line of receivers. The basic parameters are as follows:
 
-    mode: bitwise component(s) to output (1=Vx;2=Vy;4=Vz;8=P;16=S) [default=31 (all)]
-    sample: time sub-sampling factor for traces [default=1]
-    file: file name header of traces file [default="traces"]
-    x1: starting x coordinate for traces (km) [default=0.]
-    x2: ending x coordinate for traces (km) [default=0.]
-    y1: starting y coordinate for traces (km) [default=0.]
-    y2: ending y coordinate for traces (km) [default=0.]
-    p: number of traces along coordinate line (inclusive) [default=0]
+:mode:      bitwise component(s) to output (1=Vx;2=Vy;4=Vz;8=P;16=S) [default=31 (all)]
+:sample:    time sub-sampling factor for traces [default=1]
+:file:      file name header of traces file [default="traces"]
+:x1:        starting x coordinate for traces (km) [default=0.]
+:x2:        ending x coordinate for traces (km) [default=0.]
+:y1:        starting y coordinate for traces (km) [default=0.]
+:y2:        ending y coordinate for traces (km) [default=0.]
+:p:         number of traces along coordinate line (inclusive) [default=0]
+
 
 The trace command can specify one line of receivers. A separate trace command is required for each
 line of receivers. We will orient the lines parallel to the y axis by specifying the endpoints y1=0.000
@@ -198,23 +202,23 @@ The following C program will do the trick:
     L x N points. The point spacing is dh. The geophones are laid out in the
     y dimension on every grid point in a straight line. The grid spacing is dh.
     *********************************************************************************/
-    
+
     #define L 201 // number of receivers per line
     #define N 201 // number of seismic lines
     #define ds 5.0 // receiver spacing (meters)
-    
+
     #include <stdlib.h>
     #include <stdio.h>
     #include <string.h>
-    
+
     int main(int argc, char argv[])
     {
         FILE *file = fopen("tracecards", "w");
         if (!file) printf("cannot open file!\n");
-        
+
         float y1 = 0.0; // position of 1st geophone on the line
         float y2 = ((float)((L-1)*ds)) / 1000.0; // position of last geophone (km)
-        
+
         for (int i=0; i<N; i++) // for each line on the x axis
         {
             int ix = i*ds; // position of seismic line on the x axis (meters)
@@ -224,10 +228,10 @@ The following C program will do the trick:
             fprintf(file, " x1=%5.3f x2=%5.3f y1=%5.3f y2=%5.3f z1=0.000 z2=0.000\n",
                      x, x, y1, y2);
         };
-        
+
         int error = fclose (file);
         if (error) printf("error writing output file\n");
-        
+
         exit(0);
     }
 
@@ -261,12 +265,12 @@ We are going to run E3d on the Torngat cluster. We will instruct E3d to divide t
 of identical size. Each sub-volume will be processed by a separate core of the cluster. The
 more sub-volumes, the faster the job will run.
 
-The parallel command specifies the way the model grid will be sub-divided (partitioned) for execution
-in a parallel environment. There are three parameters::
+The *parallel* command specifies the way the model grid will be sub-divided (partitioned) for execution
+in a parallel environment. There are three parameters:
 
-    nx: number of partitions in the x dimension [default = 1]
-    ny: number of partitions in the y dimension [default = 1]
-    nz: number of partitions in the z dimension [default = 1]
+:nx:        number of partitions in the x dimension [default = 1]
+:ny:        number of partitions in the y dimension [default = 1]
+:nz:        number of partitions in the z dimension [default = 1]
 
 We will sub-divide the y and z dimensions into 8 partitions each but leave the x dimension undivided.
 This partitioning scheme results in 64 sub-volumes. The parallel command looks like this::
@@ -308,7 +312,7 @@ text file. We refer to this file as the job deck. The job deck for our E3d run w
     #$ -pe impi 64
     #$ -l qname=all.q
     #$ -V
-    
+
     MakeMachineFile()
     {
         cat $1 | while read line; do
@@ -318,9 +322,9 @@ text file. We refer to this file as the job deck. The job deck for our E3d run w
         done
     }
     MakeMachineFile $PE_HOSTFILE >machines.$JOB_ID
-    
+
     mpiexec.hydra --machinefile=machines.$JOB_ID /home/gblades/bin/e3d layers.e3d
-    
+
     rm machines.$JOB_ID
 
 The job deck is in a file we will call ``layers.ge``.
@@ -332,7 +336,7 @@ We specify that we want to execute the commands in the current directory with th
 
     #$ -cwd
 
-We specify the name of the job with the -N directive. We use the name cube ::
+We specify the name of the job with the -N directive. We use the name cube::
 
     #$ -N layers
 
@@ -377,54 +381,54 @@ copy command to copy these files from your workstation or personal computer to T
 
 On Torgat verify the files are there::
 
-   $ cd traces
-   $ ls
-   layers.e3d layers.ge
+    $ cd traces
+    $ ls
+    layers.e3d layers.ge
 
 In this directory we must create the sub-directory used by E3d to write the seismic trace files. So in the
 layers directory we create sub-directory traces for the seismic output ::
 
-   $ mkdir traces
-   $ ls
-   layers.e3d layers.ge traces
+    $ mkdir traces
+    $ ls
+    layers.e3d layers.ge traces
 
 We are now ready to submit the job. The qsub command is used to submit jobs to the grid engine::
 
-   $ qsub layers.ge
+    $ qsub layers.ge
 
 The grid engine will respond::
 
-   Your job layers has been submitted
+    Your job layers has been submitted
 
 We can check on the status of the job using the qstat command::
 
-   $ qstat
-   job-ID   prior    name     user    state  submit/start at      queue                      slots
-   -----------------------------------------------------------------------------------------------------
-   1810021  0.56688  layers   yourid  r      11/14/2012 13:22:24  all.q@cl032.mun.acenet.ca  64
+    $ qstat
+    job-ID   prior    name     user    state  submit/start at      queue                      slots
+    -----------------------------------------------------------------------------------------------------
+    1810021  0.56688  layers   yourid  r      11/14/2012 13:22:24  all.q@cl032.mun.acenet.ca  64
 
 Use the qstat command periodically to check the status of the job. When the job is finished it will no
 longer be reported.
 The output from the job will be written to the directory in which the job was submitted::
 
-   $ ls
-   layers.e3d layers.ge layers.output traces
+    $ ls
+    layers.e3d layers.ge layers.output traces
 
 The file layers.output contains messages from E3d. This file should be checked after the job is
 finished. There will be a section in the output file that looks like this::
 
-   Courant condition requires dt < ct
-   ----------------------------------
-      dt =  0.000400
-      ct =  0.000412
-   ct/dt =  1.03
+    Courant condition requires dt < ct
+    ----------------------------------
+    dt    = 0.000400
+    ct    = 0.000412
+    ct/dt = 1.03
 
 If the ratio ct/dt is less than 1.0 then the job did not run.
 
 The time step dt must satisfy the Courant condition::
 
-   dt < 0.606 * dh / Vmax (for 2D)
-   dt < 0.494 * dh / Vmax (for 3D)
+    dt < 0.606 * dh / Vmax (for 2D)
+    dt < 0.494 * dh / Vmax (for 3D)
 
 where dh is the grid spacing and Vmax is the maximum (P) velocity in the grid.
 
@@ -433,13 +437,13 @@ Courant condition is satisfied and re-submit the job.
 
 The traces directory will contain the seismic traces recorded during the simulation::
 
-   $ ls traces
-   line.x.0000.0.TP line.x.0335.67.TP line.x.0670.134.TP
-   line.x.0005.1.TP line.x.0340.68.TP line.x.0675.135.TP
-      ... ... ... ... ...
-      ... ... ... ... ...
-   line.x.0325.65.TP line.x.0660.132.TP line.x.0995.199.TP
-   line.x.0330.66.TP line.x.0665.133.TP line.x.1000.200.TP
+    $ ls traces
+    line.x.0000.0.TP line.x.0335.67.TP line.x.0670.134.TP
+    line.x.0005.1.TP line.x.0340.68.TP line.x.0675.135.TP
+       ... ... ... ... ...
+       ... ... ... ... ...
+    line.x.0325.65.TP line.x.0660.132.TP line.x.0995.199.TP
+    line.x.0330.66.TP line.x.0665.133.TP line.x.1000.200.TP
 
 The traces for each seismic line are in one file in a multiplexed format peculiar to E3d. These
 multiplexed files must be converted to a sequential binary file format suitable for use with industry
@@ -447,22 +451,22 @@ standard seismic programs. The bintrace command is used to perform the conversio
 command in the directory which contains the traces sub-directory (eg, not in the traces directory, above
 it)::
 
-   $ /home/gblades/bin/bintraces
+    $ /home/gblades/bin/bintraces
 
 The result will be a directory bintraces which contains the demultiplexed traces in binary format. The
 trace files need to transfered to a local workstation so we can view them as a seismic section. Copy the
 trace files into a single file for copying. We create a tape archive::
 
-   $ tar cvf bintraces.tar bintraces
+    $ tar cvf bintraces.tar bintraces
 
 Copy the bintraces tape archive to your local workstation. On your local workstation or personal
 computer::
 
-   $ scp yourid@torngat.creait.mun.ca:~/traces/bintraces.tar .
+    $ scp yourid@torngat.creait.mun.ca:~/traces/bintraces.tar .
 
 Unpack the archive::
 
-   $ tar xvf bintraces.tar
+    $ tar xvf bintraces.tar
 
 The result will be a directory called bintraces with the seismic trace files.
 We now add headers to the traces. Seismic Unix can be used to perform this task. The traces can now
@@ -484,21 +488,21 @@ program illustrates how to create the grid files required for our two layer mode
     #include <stdlib.h>
     #include <stdio.h>
     #include <math.h>
-    
+
     #define BASENAME "layers"
-    
+
     #define L 401
     #define M 401
     #define N 401
-    
+
     #define P1 4.00
     #define S1 2.67
     #define R1 2.30
-    
+
     #define P2 6.00
     #define S2 4.00
     #define R2 2.50
-    
+
     int main(int argc, char *argv[])
     {
         float *slice = (float*)malloc(M*N*sizeof(float));
@@ -563,37 +567,37 @@ program illustrates how to create the grid files required for our two layer mode
 
 We name the program file layers.c . And compile and run the C-program in a shell like so::
 
-   $ cc -std=c99 layers.c -o layers
-   $ ./layers
+    $ cc -std=c99 layers.c -o layers
+    $ ./layers
 
 The program creates the three grid files in a sub-directory called model ::
 
-   $ ls model
-   layers.p layers.r layers.s
+    $ ls model
+    layers.p layers.r layers.s
 
 If the files are on your personal computer, transfer them to the traces directory on Torngat ::
 
-   $ ls
-   layers.e3d layers.ge model traces
+    $ ls
+    layers.e3d layers.ge model traces
 
 The vfile command specifies how to load and position a grid file into the model in E3d. The basic
-parameters are as follows ::
+parameters are as follows:
 
-   type: input file type (p, s, r) [default = none]
-   file: name of the grid file [required]
-   l1: index of first grid point in y dimension of the model [required]
-   l2: index of last grid point in y dimension of the model l [ required]
-   m1: index of first grid point in z dimension of the model [required]
-   m2: index of last grid point in z dimension of the model [required]
-   n1: index of first grid point in x dimension of the model [required]
-   n2: index of last grid point in x dimension of the model [required]
+:type:      input file type (p, s, r) [default = none]
+:file:      name of the grid file [required]
+:l1:        index of first grid point in y dimension of the model [required]
+:l2:        index of last grid point in y dimension of the model l [ required]
+:m1:        index of first grid point in z dimension of the model [required]
+:m2:        index of last grid point in z dimension of the model [required]
+:n1:        index of first grid point in x dimension of the model [required]
+:n2:        index of last grid point in x dimension of the model [required]
 
 The our two layer example the grid files are the same size and dimensions as the model. So the vfile
 commands look like this ::
 
-   vfile type=p l1=0 l2=400 m1=0 m2=400 n1=0 n2=400 file="model/layers.p"
-   vfile type=s l1=0 l2=400 m1=0 m2=400 n1=0 n2=400 file="model/layers.s"
-   vfile type=r l1=0 l2=400 m1=0 m2=400 n1=0 n2=400 file="model/layers.r"
+    vfile type=p l1=0 l2=400 m1=0 m2=400 n1=0 n2=400 file="model/layers.p"
+    vfile type=s l1=0 l2=400 m1=0 m2=400 n1=0 n2=400 file="model/layers.s"
+    vfile type=r l1=0 l2=400 m1=0 m2=400 n1=0 n2=400 file="model/layers.r"
 
 The vfile commands replace the block commands in the input parameter file layers.e3d. The contents
 of the parameter file now looks like this::
@@ -631,18 +635,18 @@ As an example we could split the two layer model into two pieces along the y axi
 point (even though it does not exceed the size limit). The grid files could be numbered to identify the
 pieces.::
 
-   $ ls model
-   layers-1.p layers-1.r layers-1.s
-   layers-2.p layers-2.r layers-2.s
+    $ ls model
+    layers-1.p layers-1.r layers-1.s
+    layers-2.p layers-2.r layers-2.s
 
 A vfile command would then be specified for each of the grid files.::
 
-   vfile type=p l1=0 l2=199 m1=0 m2=400 n1=0 n2=400 file="model/layers-1.p"
-   vfile type=s l1=0 l2=199 m1=0 m2=400 n1=0 n2=400 file="model/layers-1.s"
-   vfile type=r l1=0 l2=199 m1=0 m2=400 n1=0 n2=400 file="model/layers-1.r"
-   vfile type=p l1=200 l2=400 m1=0 m2=400 n1=0 n2=400 file="model/layers-2.p"
-   vfile type=s l1=200 l2=400 m1=0 m2=400 n1=0 n2=400 file="model/layers-2.s"
-   vfile type=r l1=200 l2=400 m1=0 m2=400 n1=0 n2=400 file="model/layers-2.r"
+    vfile type=p l1=0 l2=199 m1=0 m2=400 n1=0 n2=400 file="model/layers-1.p"
+    vfile type=s l1=0 l2=199 m1=0 m2=400 n1=0 n2=400 file="model/layers-1.s"
+    vfile type=r l1=0 l2=199 m1=0 m2=400 n1=0 n2=400 file="model/layers-1.r"
+    vfile type=p l1=200 l2=400 m1=0 m2=400 n1=0 n2=400 file="model/layers-2.p"
+    vfile type=s l1=200 l2=400 m1=0 m2=400 n1=0 n2=400 file="model/layers-2.s"
+    vfile type=r l1=200 l2=400 m1=0 m2=400 n1=0 n2=400 file="model/layers-2.r"
 
 The E3d job could be run as before.
 
@@ -672,10 +676,10 @@ integers starting at 0. The rock type with id=0 is considered to be the default 
 The regions file root name must be the same as the project name with extension “regions”. The regions
 file must be located in the Facet Modeller project directory.::
 
-   $ more layers.regions
+    $ more layers.regions
 
-   1 500 500 250 0 #Background
-   2 500 500 750 1 #Layer
+    1 500 500 250 0 #Background
+    2 500 500 750 1 #Layer
 
 The rocks file is an ascii text file specifying the geophysical properties (attributes) for each rock type.
 In our two layer example we have two rock types: 1) upper layer or background rock (id=0), 2) lower
@@ -688,10 +692,10 @@ layer rock (id=1). Three attributes are required for each rock type: 1) p-veloci
 The rocks file name is specified in the gridding dialog. It must have the extension “rocks”. The rocks
 file must be located in the Facet Modeller project directory.::
 
-   $ more layers.rocks
+    $ more layers.rocks
 
-   0 p=4.0 s=2.66 r=2.5 #Background
-   1 p=6.0 s=4.00 r=2.5 #Layer
+    0 p=4.0 s=2.66 r=2.5 #Background
+    1 p=6.0 s=4.00 r=2.5 #Layer
 
 The gridding procedure is invoked with the Grid button in the main toolbar of Facet Modeller.
 
@@ -709,18 +713,18 @@ Facet Modeller considerable time to create the grid model. The following files a
 
 The output grid files are located in a directory named model in the Facet Modeller project directory.::
 
-   $ ls model
+    $ ls model
 
-   layers.p layers.r layers.s
+    layers.p layers.r layers.s
 
 The vfile command specification file is output in the Facet Modeller project directory. It has a root
 name the same as the project name with extension vfile.::
 
-   $ more layers.vfile
-   
-   vfile type=p l1=0 l2=400 m1=0 m2=400 n1=0 n2=400 file="model/layers.p"
-   vfile type=s l1=0 l2=400 m1=0 m2=400 n1=0 n2=400 file="model/layers.s"
-   vfile type=r l1=0 l2=400 m1=0 m2=400 n1=0 n2=400 file="model/layers.r"
+    $ more layers.vfile
+
+    vfile type=p l1=0 l2=400 m1=0 m2=400 n1=0 n2=400 file="model/layers.p"
+    vfile type=s l1=0 l2=400 m1=0 m2=400 n1=0 n2=400 file="model/layers.s"
+    vfile type=r l1=0 l2=400 m1=0 m2=400 n1=0 n2=400 file="model/layers.r"
 
 The vfile command specification is to be copied and pasted into the E3d parameter file as in the
 previous example.

@@ -6,10 +6,8 @@
     
     <title>… run E3d on Torngat &#8212; CAGG Torngat Documentation  documentation</title>
     
-    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootswatch-3.3.6/yeti/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -85,7 +83,10 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">… run E3d on Torngat</a></li>
+<li><a class="reference internal" href="#">… run E3d on Torngat</a><ul>
+<li><a class="reference internal" href="#how-to-run-e3d-on-torngat">How to run E3d on Torngat</a></li>
+</ul>
+</li>
 </ul>
 </ul>
 </li>
@@ -135,10 +136,9 @@
       
   <div class="section" id="run-e3d-on-torngat">
 <h1>… run E3d on Torngat<a class="headerlink" href="#run-e3d-on-torngat" title="Permalink to this headline">¶</a></h1>
-<p>How to run
-E3d
-on Torngat
-08 Jan 2013</p>
+<div class="section" id="how-to-run-e3d-on-torngat">
+<h2>How to run E3d on Torngat<a class="headerlink" href="#how-to-run-e3d-on-torngat" title="Permalink to this headline">¶</a></h2>
+<p>08 Jan 2013</p>
 <p>This note describes how to run E3d on the Torngat cluster.</p>
 <p>E3d is a computer program for simulating seismic waves in an elastic medium. Simulation parameters
 are specified in an input parameter file. Simple models of the elastic medium (earth model) can be
@@ -150,40 +150,46 @@ grid is defined in a left handed coordinate system (positive z axis pointing dow
 <p>The input parameter file is an ascii (text) file containing a series of commands. Each command consists
 of a keyword followed by one or more parameter-value pairs. The basic commands are as follows:</p>
 <dl class="docutils">
-<dt><strong>grid:</strong></dt>
+<dt>grid</dt>
 <dd>specifies the grid dimensions and boundary conditions</dd>
-<dt><strong>time:</strong></dt>
+<dt>time</dt>
 <dd>specifies the simulation time, step interval</dd>
-<dt><strong>source:</strong></dt>
+<dt>source</dt>
 <dd>specifies the source location, source waveform, source time delay</dd>
-<dt><strong>block:</strong></dt>
+<dt>block</dt>
 <dd>specifies the velocity, density for a specified block of the grid</dd>
-<dt><strong>parallel:</strong></dt>
+<dt>parallel</dt>
 <dd>specifies the partitioning of the model grid for parallelization</dd>
-<dt><strong>traces:</strong></dt>
+<dt>traces</dt>
 <dd>specifies the geometry of the receivers for a seismic line</dd>
 </dl>
 <p>The grid command specifies the geometry and boundary conditions of the model. The basic parameters
 are as follows:</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>l:</dt>
-<dd>the number of grid points in the y direction [required]</dd>
-<dt>m:</dt>
-<dd>the number of grid points in the z direction [required]</dd>
-<dt>n:</dt>
-<dd>the number of grid points in the x direction [required]</dd>
-<dt>dh:</dt>
-<dd>the grid point spacing in all directions (in kilometers)</dd>
-<dt>b:</dt>
-<dd><p class="first">grid boundary conditions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">l:</th><td class="field-body"><p class="first">the number of grid points in the y direction [required]</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">m:</th><td class="field-body"><p class="first">the number of grid points in the z direction [required]</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">n:</th><td class="field-body"><p class="first">the number of grid points in the x direction [required]</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">dh:</th><td class="field-body"><p class="first">the grid point spacing in all directions (in kilometers)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">b:</th><td class="field-body"><p class="first">grid boundary conditions</p>
 <p>1 = reflecting</p>
 <p>2 = absorbing</p>
 <p>3 = surface [default]</p>
 <p class="last">4 = surface modified for acoustic instabilities</p>
-</dd>
-</dl>
-</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
 <p>To demonstrate how to use E3d we consider an earth model which is 1 kilometer by 1 kilometer by 1
 kilometer (a cube). We will set the grid point spacing to 2.5 meters. The grid dimensions are thus 401
 by 401 by 401 points, a grid size of approximately 64 million points.</p>
@@ -195,10 +201,16 @@ which is the default so we do not need to specify it explicitly. The grid comman
 <p>Note there must not be any spaces on either side of the equal signs.</p>
 <p>The time command time simulation time and the simulation time step interval. The basic parameters
 are as follows:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">t</span><span class="p">:</span> <span class="n">number</span> <span class="n">of</span> <span class="n">time</span><span class="o">-</span><span class="n">steps</span> <span class="p">[</span><span class="n">required</span><span class="p">]</span>
-<span class="n">dt</span><span class="p">:</span> <span class="n">time</span><span class="o">-</span><span class="n">stepping</span> <span class="n">increment</span> <span class="p">(</span><span class="n">seconds</span><span class="p">)</span> <span class="p">[</span><span class="n">required</span><span class="p">]</span>
-</pre></div>
-</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">t:</th><td class="field-body">number of time-steps [required]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">dt:</th><td class="field-body">time-stepping increment (seconds) [required]</td>
+</tr>
+</tbody>
+</table>
 <p>We will set up the job to solve the wave equation for a time duration of ½ second. We choose a time
 step size of 0.2 milliseconds. 2500 time steps are required for a time duration of ½ second.</p>
 <p>The time command will look like this:</p>
@@ -206,24 +218,41 @@ step size of 0.2 milliseconds. 2500 time steps are required for a time duration 
 </pre></div>
 </div>
 <p>The source command describes the source function and position. The basic parameters are as follows:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">:</span> <span class="n">source</span> <span class="nb">type</span> <span class="p">[</span><span class="n">required</span><span class="p">]</span>
-    <span class="mi">1</span><span class="o">=</span><span class="n">P</span> <span class="n">wave</span>
-    <span class="mi">2</span><span class="o">=</span><span class="n">S</span> <span class="n">wave</span>
-    <span class="mi">4</span><span class="o">=</span><span class="n">Moment</span> <span class="n">Tensor</span>
-    <span class="mi">5</span><span class="o">=</span><span class="n">Force</span>
-    <span class="mi">6</span><span class="o">=</span><span class="n">Fault</span> <span class="p">(</span><span class="n">point</span> <span class="n">source</span><span class="p">)</span>
-    <span class="mi">7</span><span class="o">=</span><span class="n">Fault</span> <span class="p">(</span><span class="n">finite</span> <span class="n">length</span><span class="p">)</span>
-    <span class="mi">8</span><span class="o">=</span><span class="n">Distributed</span> <span class="n">Slip</span> <span class="p">(</span><span class="kn">from</span> <span class="nn">file</span><span class="p">)</span>
-    <span class="mi">9</span><span class="o">=</span><span class="n">Distributed</span> <span class="n">Slip</span> <span class="p">(</span><span class="kn">from</span> <span class="nn">file</span> <span class="k">with</span> <span class="n">rise</span><span class="o">-</span><span class="n">times</span><span class="p">)</span>
-
-<span class="n">amp</span><span class="p">:</span> <span class="n">amplitude</span> <span class="n">of</span> <span class="n">source</span> <span class="p">(</span><span class="ow">in</span> <span class="n">dyne</span><span class="o">-</span><span class="n">cm</span><span class="p">)</span> <span class="p">[</span><span class="n">required</span><span class="p">]</span>
-<span class="n">freq</span><span class="p">:</span> <span class="n">central</span> <span class="n">frequency</span> <span class="n">of</span> <span class="n">source</span> <span class="ow">in</span> <span class="n">Hz</span> <span class="p">[</span><span class="n">default</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">]</span>
-<span class="n">t0</span><span class="p">:</span> <span class="n">shift</span> <span class="ow">in</span> <span class="n">start</span> <span class="n">time</span> <span class="n">of</span> <span class="n">the</span> <span class="n">source</span> <span class="ow">in</span> <span class="n">seconds</span> <span class="p">[</span><span class="n">default</span> <span class="o">=</span> <span class="mi">0</span><span class="p">]</span>
-<span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="n">position</span> <span class="n">of</span> <span class="n">source</span> <span class="p">(</span><span class="n">kilometers</span><span class="p">)</span> <span class="p">[</span><span class="n">default</span> <span class="o">=</span> <span class="n">center</span> <span class="n">of</span> <span class="n">grid</span><span class="p">]</span>
-<span class="n">y</span><span class="p">:</span> <span class="n">y</span> <span class="n">position</span> <span class="n">of</span> <span class="n">source</span> <span class="p">(</span><span class="n">kilometers</span><span class="p">)</span> <span class="p">[</span><span class="n">default</span> <span class="o">=</span> <span class="n">center</span> <span class="n">of</span> <span class="n">grid</span><span class="p">]</span>
-<span class="n">z</span><span class="p">:</span> <span class="n">z</span> <span class="n">position</span> <span class="n">of</span> <span class="n">source</span> <span class="p">(</span><span class="n">kilometers</span><span class="p">)</span> <span class="p">[</span><span class="n">default</span> <span class="o">=</span> <span class="n">center</span> <span class="n">of</span> <span class="n">grid</span><span class="p">]</span>
-</pre></div>
-</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">type:</th><td class="field-body"><p class="first">source type [required]</p>
+<p>1=P wave</p>
+<p>2=S wave</p>
+<p>4=Moment Tensor</p>
+<p>5=Force</p>
+<p>6=Fault (point source)</p>
+<p>7=Fault (finite length)</p>
+<p>8=Distributed Slip (from file)</p>
+<p>9=Distributed Slip (from file with rise-times)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">amp:</th><td class="field-body"><p class="first">amplitude of source (in dyne-cm) [required]</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">freq:</th><td class="field-body"><p class="first">central frequency of source in Hz [default = 1.0]</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">t0:</th><td class="field-body"><p class="first">shift in start time of the source in seconds [default = 0]</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">x:</th><td class="field-body"><p class="first">x position of source (kilometers) [default = center of grid]</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">y:</th><td class="field-body"><p class="first">y position of source (kilometers) [default = center of grid]</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">z:</th><td class="field-body"><p class="first last">z position of source (kilometers) [default = center of grid]</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p>For our example we choose to position the source on the surface in the center of the model.</p>
 <img alt="../../_images/sourceposition.png" class="align-center" src="../../_images/sourceposition.png" />
 <p>The model is a 1 km cube, so we set the source position as x=0.5 km, y=0.5 km, z=0 km, at the surface.
@@ -237,17 +266,30 @@ minimize ringing so we set t=0.025. The source command will look like this:</p>
 </div>
 <p>The block command describes the velocity, density and attenuation of the model at each grid point
 within a specified block (sub-region) of the grid. The basic parameters are as follows:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="o">-</span><span class="n">wave</span> <span class="n">velocity</span> <span class="p">(</span><span class="n">km</span><span class="o">/</span><span class="n">sec</span><span class="p">)</span> <span class="p">[</span><span class="n">default</span> <span class="o">=</span> <span class="n">none</span><span class="p">]</span>
-<span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">-</span><span class="n">wave</span> <span class="n">velocity</span> <span class="p">(</span><span class="n">km</span><span class="o">/</span><span class="n">sec</span><span class="p">)</span> <span class="p">[</span><span class="n">default</span> <span class="o">=</span> <span class="n">none</span><span class="p">]</span>
-<span class="n">r</span><span class="p">:</span> <span class="n">density</span> <span class="p">(</span><span class="n">g</span><span class="o">/</span><span class="n">cm</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="p">[</span><span class="n">default</span> <span class="o">=</span> <span class="n">none</span><span class="p">]</span>
-<span class="n">l1</span><span class="p">:</span> <span class="n">index</span> <span class="n">of</span> <span class="n">first</span> <span class="n">grid</span> <span class="n">point</span> <span class="n">of</span> <span class="n">block</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">y</span> <span class="n">dimension</span> <span class="p">[</span> <span class="n">default</span> <span class="o">=</span> <span class="mi">0</span><span class="p">]</span>
-<span class="n">l2</span><span class="p">:</span> <span class="n">index</span> <span class="n">of</span> <span class="n">last</span> <span class="n">grid</span> <span class="n">point</span> <span class="n">of</span> <span class="n">block</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">y</span> <span class="n">dimension</span> <span class="p">[</span><span class="n">default</span> <span class="o">=</span> <span class="n">end</span> <span class="n">of</span> <span class="n">grid</span><span class="p">]</span>
-<span class="n">m1</span><span class="p">:</span> <span class="n">index</span> <span class="n">of</span> <span class="n">first</span> <span class="n">grid</span> <span class="n">point</span> <span class="n">of</span> <span class="n">block</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">z</span> <span class="n">dimension</span> <span class="p">[</span><span class="n">default</span> <span class="o">=</span> <span class="mi">0</span><span class="p">]</span>
-<span class="n">m2</span><span class="p">:</span> <span class="n">index</span> <span class="n">of</span> <span class="n">last</span> <span class="n">grid</span> <span class="n">point</span> <span class="n">of</span> <span class="n">block</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">z</span> <span class="n">dimension</span> <span class="p">[</span><span class="n">default</span> <span class="o">=</span> <span class="n">end</span> <span class="n">of</span> <span class="n">grid</span><span class="p">]</span>
-<span class="n">n1</span><span class="p">:</span> <span class="n">index</span> <span class="n">of</span> <span class="n">first</span> <span class="n">grid</span> <span class="n">point</span> <span class="n">of</span> <span class="n">block</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">x</span> <span class="n">dimension</span> <span class="p">[</span><span class="n">default</span> <span class="o">=</span> <span class="mi">0</span><span class="p">]</span>
-<span class="n">n2</span><span class="p">:</span> <span class="n">index</span> <span class="n">of</span> <span class="n">last</span> <span class="n">grid</span> <span class="n">point</span> <span class="n">of</span> <span class="n">block</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">x</span> <span class="n">dimension</span> <span class="p">[</span><span class="n">default</span> <span class="o">=</span> <span class="n">end</span> <span class="n">of</span> <span class="n">grid</span><span class="p">]</span>
-</pre></div>
-</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">p:</th><td class="field-body">p-wave velocity (km/sec) [default = none]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">s:</th><td class="field-body">s-wave velocity (km/sec) [default = none]</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">r:</th><td class="field-body">density (g/cm**3) [default = none]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">l1:</th><td class="field-body">index of first grid point of block element in y dimension [ default = 0]</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">l2:</th><td class="field-body">index of last grid point of block element in y dimension [default = end of grid]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">m1:</th><td class="field-body">index of first grid point of block element in z dimension [default = 0]</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">m2:</th><td class="field-body">index of last grid point of block element in z dimension [default = end of grid]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">n1:</th><td class="field-body">index of first grid point of block element in x dimension [default = 0]</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">n2:</th><td class="field-body">index of last grid point of block element in x dimension [default = end of grid]</td>
+</tr>
+</tbody>
+</table>
 <p>We choose a simple two layer model for the purpose of demonstrating how to specify the model.</p>
 <img alt="../../_images/twolayer.png" class="align-center" src="../../_images/twolayer.png" />
 <p>We will model the top layer with a p-wave velocity of 4 km/sec so we set p=4.0. We model the top
@@ -270,17 +312,29 @@ the second layer is thus:</p>
 second block overwrote the lower half of the background defined in the first block command.</p>
 <p>E3D can simulate the seismic signal at specified receiver locations in the grid.</p>
 <p>E3D can simulate the seismic signal at specified receiver locations in the grid.
-The traces command is used to specify a line of receivers. The basic parameters are as follows</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mode</span><span class="p">:</span> <span class="n">bitwise</span> <span class="n">component</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">to</span> <span class="n">output</span> <span class="p">(</span><span class="mi">1</span><span class="o">=</span><span class="n">Vx</span><span class="p">;</span><span class="mi">2</span><span class="o">=</span><span class="n">Vy</span><span class="p">;</span><span class="mi">4</span><span class="o">=</span><span class="n">Vz</span><span class="p">;</span><span class="mi">8</span><span class="o">=</span><span class="n">P</span><span class="p">;</span><span class="mi">16</span><span class="o">=</span><span class="n">S</span><span class="p">)</span> <span class="p">[</span><span class="n">default</span><span class="o">=</span><span class="mi">31</span> <span class="p">(</span><span class="nb">all</span><span class="p">)]</span>
-<span class="n">sample</span><span class="p">:</span> <span class="n">time</span> <span class="n">sub</span><span class="o">-</span><span class="n">sampling</span> <span class="n">factor</span> <span class="k">for</span> <span class="n">traces</span> <span class="p">[</span><span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">file</span><span class="p">:</span> <span class="n">file</span> <span class="n">name</span> <span class="n">header</span> <span class="n">of</span> <span class="n">traces</span> <span class="n">file</span> <span class="p">[</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;traces&quot;</span><span class="p">]</span>
-<span class="n">x1</span><span class="p">:</span> <span class="n">starting</span> <span class="n">x</span> <span class="n">coordinate</span> <span class="k">for</span> <span class="n">traces</span> <span class="p">(</span><span class="n">km</span><span class="p">)</span> <span class="p">[</span><span class="n">default</span><span class="o">=</span><span class="mf">0.</span><span class="p">]</span>
-<span class="n">x2</span><span class="p">:</span> <span class="n">ending</span> <span class="n">x</span> <span class="n">coordinate</span> <span class="k">for</span> <span class="n">traces</span> <span class="p">(</span><span class="n">km</span><span class="p">)</span> <span class="p">[</span><span class="n">default</span><span class="o">=</span><span class="mf">0.</span><span class="p">]</span>
-<span class="n">y1</span><span class="p">:</span> <span class="n">starting</span> <span class="n">y</span> <span class="n">coordinate</span> <span class="k">for</span> <span class="n">traces</span> <span class="p">(</span><span class="n">km</span><span class="p">)</span> <span class="p">[</span><span class="n">default</span><span class="o">=</span><span class="mf">0.</span><span class="p">]</span>
-<span class="n">y2</span><span class="p">:</span> <span class="n">ending</span> <span class="n">y</span> <span class="n">coordinate</span> <span class="k">for</span> <span class="n">traces</span> <span class="p">(</span><span class="n">km</span><span class="p">)</span> <span class="p">[</span><span class="n">default</span><span class="o">=</span><span class="mf">0.</span><span class="p">]</span>
-<span class="n">p</span><span class="p">:</span> <span class="n">number</span> <span class="n">of</span> <span class="n">traces</span> <span class="n">along</span> <span class="n">coordinate</span> <span class="n">line</span> <span class="p">(</span><span class="n">inclusive</span><span class="p">)</span> <span class="p">[</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">]</span>
-</pre></div>
-</div>
+The traces command is used to specify a line of receivers. The basic parameters are as follows:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">mode:</th><td class="field-body">bitwise component(s) to output (1=Vx;2=Vy;4=Vz;8=P;16=S) [default=31 (all)]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">sample:</th><td class="field-body">time sub-sampling factor for traces [default=1]</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">file:</th><td class="field-body">file name header of traces file [default=”traces”]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">x1:</th><td class="field-body">starting x coordinate for traces (km) [default=0.]</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">x2:</th><td class="field-body">ending x coordinate for traces (km) [default=0.]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">y1:</th><td class="field-body">starting y coordinate for traces (km) [default=0.]</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">y2:</th><td class="field-body">ending y coordinate for traces (km) [default=0.]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">p:</th><td class="field-body">number of traces along coordinate line (inclusive) [default=0]</td>
+</tr>
+</tbody>
+</table>
 <p>The trace command can specify one line of receivers. A separate trace command is required for each
 line of receivers. We will orient the lines parallel to the y axis by specifying the endpoints y1=0.000
 and y2=1.000 . To position the first line on the x axis at x=0 we specify x1=0.0 and x2=0.0 . We specify
@@ -403,13 +457,20 @@ is specified on two lines of text in the parameter file using the continuation c
 <p>We are going to run E3d on the Torngat cluster. We will instruct E3d to divide the model grid into subvolumes
 of identical size. Each sub-volume will be processed by a separate core of the cluster. The
 more sub-volumes, the faster the job will run.</p>
-<p>The parallel command specifies the way the model grid will be sub-divided (partitioned) for execution
+<p>The <em>parallel</em> command specifies the way the model grid will be sub-divided (partitioned) for execution
 in a parallel environment. There are three parameters:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">nx</span><span class="p">:</span> <span class="n">number</span> <span class="n">of</span> <span class="n">partitions</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">x</span> <span class="n">dimension</span> <span class="p">[</span><span class="n">default</span> <span class="o">=</span> <span class="mi">1</span><span class="p">]</span>
-<span class="n">ny</span><span class="p">:</span> <span class="n">number</span> <span class="n">of</span> <span class="n">partitions</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">y</span> <span class="n">dimension</span> <span class="p">[</span><span class="n">default</span> <span class="o">=</span> <span class="mi">1</span><span class="p">]</span>
-<span class="n">nz</span><span class="p">:</span> <span class="n">number</span> <span class="n">of</span> <span class="n">partitions</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">z</span> <span class="n">dimension</span> <span class="p">[</span><span class="n">default</span> <span class="o">=</span> <span class="mi">1</span><span class="p">]</span>
-</pre></div>
-</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">nx:</th><td class="field-body">number of partitions in the x dimension [default = 1]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ny:</th><td class="field-body">number of partitions in the y dimension [default = 1]</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">nz:</th><td class="field-body">number of partitions in the z dimension [default = 1]</td>
+</tr>
+</tbody>
+</table>
 <p>We will sub-divide the y and z dimensions into 8 partitions each but leave the x dimension undivided.
 This partitioning scheme results in 64 sub-volumes. The parallel command looks like this:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">parallel</span> <span class="n">nx</span><span class="o">=</span><span class="mi">1</span> <span class="n">ny</span><span class="o">=</span><span class="mi">8</span> <span class="n">nz</span><span class="o">=</span><span class="mi">8</span>
@@ -470,7 +531,7 @@ Each directive starts with #$ . There must be no space before the #$ but there s
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#$ -cwd</span>
 </pre></div>
 </div>
-<p>We specify the name of the job with the -N directive. We use the name cube</p>
+<p>We specify the name of the job with the -N directive. We use the name cube:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#$ -N layers</span>
 </pre></div>
 </div>
@@ -551,9 +612,9 @@ layers.e3d layers.ge layers.output traces
 finished. There will be a section in the output file that looks like this:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Courant</span> <span class="n">condition</span> <span class="n">requires</span> <span class="n">dt</span> <span class="o">&lt;</span> <span class="n">ct</span>
 <span class="o">----------------------------------</span>
-   <span class="n">dt</span> <span class="o">=</span>  <span class="mf">0.000400</span>
-   <span class="n">ct</span> <span class="o">=</span>  <span class="mf">0.000412</span>
-<span class="n">ct</span><span class="o">/</span><span class="n">dt</span> <span class="o">=</span>  <span class="mf">1.03</span>
+<span class="n">dt</span>    <span class="o">=</span> <span class="mf">0.000400</span>
+<span class="n">ct</span>    <span class="o">=</span> <span class="mf">0.000412</span>
+<span class="n">ct</span><span class="o">/</span><span class="n">dt</span> <span class="o">=</span> <span class="mf">1.03</span>
 </pre></div>
 </div>
 <p>If the ratio ct/dt is less than 1.0 then the job did not run.</p>
@@ -782,17 +843,29 @@ layers.e3d layers.ge model traces
 </pre></div>
 </div>
 <p>The vfile command specifies how to load and position a grid file into the model in E3d. The basic
-parameters are as follows</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">:</span> <span class="nb">input</span> <span class="n">file</span> <span class="nb">type</span> <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="p">[</span><span class="n">default</span> <span class="o">=</span> <span class="n">none</span><span class="p">]</span>
-<span class="n">file</span><span class="p">:</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">grid</span> <span class="n">file</span> <span class="p">[</span><span class="n">required</span><span class="p">]</span>
-<span class="n">l1</span><span class="p">:</span> <span class="n">index</span> <span class="n">of</span> <span class="n">first</span> <span class="n">grid</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">y</span> <span class="n">dimension</span> <span class="n">of</span> <span class="n">the</span> <span class="n">model</span> <span class="p">[</span><span class="n">required</span><span class="p">]</span>
-<span class="n">l2</span><span class="p">:</span> <span class="n">index</span> <span class="n">of</span> <span class="n">last</span> <span class="n">grid</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">y</span> <span class="n">dimension</span> <span class="n">of</span> <span class="n">the</span> <span class="n">model</span> <span class="n">l</span> <span class="p">[</span> <span class="n">required</span><span class="p">]</span>
-<span class="n">m1</span><span class="p">:</span> <span class="n">index</span> <span class="n">of</span> <span class="n">first</span> <span class="n">grid</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">z</span> <span class="n">dimension</span> <span class="n">of</span> <span class="n">the</span> <span class="n">model</span> <span class="p">[</span><span class="n">required</span><span class="p">]</span>
-<span class="n">m2</span><span class="p">:</span> <span class="n">index</span> <span class="n">of</span> <span class="n">last</span> <span class="n">grid</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">z</span> <span class="n">dimension</span> <span class="n">of</span> <span class="n">the</span> <span class="n">model</span> <span class="p">[</span><span class="n">required</span><span class="p">]</span>
-<span class="n">n1</span><span class="p">:</span> <span class="n">index</span> <span class="n">of</span> <span class="n">first</span> <span class="n">grid</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">x</span> <span class="n">dimension</span> <span class="n">of</span> <span class="n">the</span> <span class="n">model</span> <span class="p">[</span><span class="n">required</span><span class="p">]</span>
-<span class="n">n2</span><span class="p">:</span> <span class="n">index</span> <span class="n">of</span> <span class="n">last</span> <span class="n">grid</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">x</span> <span class="n">dimension</span> <span class="n">of</span> <span class="n">the</span> <span class="n">model</span> <span class="p">[</span><span class="n">required</span><span class="p">]</span>
-</pre></div>
-</div>
+parameters are as follows:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">type:</th><td class="field-body">input file type (p, s, r) [default = none]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">file:</th><td class="field-body">name of the grid file [required]</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">l1:</th><td class="field-body">index of first grid point in y dimension of the model [required]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">l2:</th><td class="field-body">index of last grid point in y dimension of the model l [ required]</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">m1:</th><td class="field-body">index of first grid point in z dimension of the model [required]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">m2:</th><td class="field-body">index of last grid point in z dimension of the model [required]</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">n1:</th><td class="field-body">index of first grid point in x dimension of the model [required]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">n2:</th><td class="field-body">index of last grid point in x dimension of the model [required]</td>
+</tr>
+</tbody>
+</table>
 <p>The our two layer example the grid files are the same size and dimensions as the model. So the vfile
 commands look like this</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vfile</span> <span class="nb">type</span><span class="o">=</span><span class="n">p</span> <span class="n">l1</span><span class="o">=</span><span class="mi">0</span> <span class="n">l2</span><span class="o">=</span><span class="mi">400</span> <span class="n">m1</span><span class="o">=</span><span class="mi">0</span> <span class="n">m2</span><span class="o">=</span><span class="mi">400</span> <span class="n">n1</span><span class="o">=</span><span class="mi">0</span> <span class="n">n2</span><span class="o">=</span><span class="mi">400</span> <span class="n">file</span><span class="o">=</span><span class="s2">&quot;model/layers.p&quot;</span>
@@ -919,6 +992,7 @@ previous example.</p>
 <p>If the model size exceeds the 500K grid point limit for a single file then Facet Modeller will
 automatically split the grid into multiple files as necessary and generate the appropriate vfile
 commands for E3d.</p>
+</div>
 </div>
 
 
