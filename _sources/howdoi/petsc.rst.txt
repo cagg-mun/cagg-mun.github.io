@@ -1,8 +1,9 @@
-... use PETSc on Torngat
-========================
-How to use PETSc on Torngat
----------------------------
+... compile PETSc on Torngat
+============================
 ${date}
+
+Setting up an environment
+---------------------------
 
 First check the official `PETSc`_ site for documentation
 
