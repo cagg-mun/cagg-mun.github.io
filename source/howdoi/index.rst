@@ -4,8 +4,6 @@ How do I ...
 .. toctree::
    :maxdepth: 1
 
-..    petsc
-
    getatorngataccount
    transferdatatoacenet
    pickaparallelenvironment
@@ -16,3 +14,6 @@ How do I ...
    unusual
 
    impi/mpi-helloworld
+
+
+.. petsc

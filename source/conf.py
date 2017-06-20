@@ -51,8 +51,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'CAGG Torngat Documentation'
-copyright = u'2017, Paul S'
+project = u'C.A.G.G. Torngat Documentation'
+copyright = u'2017, MUN'
 author = u'Paul S'
 
 # The version info for the project you're documenting, acts as replacement for

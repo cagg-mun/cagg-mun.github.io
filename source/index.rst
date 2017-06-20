@@ -16,9 +16,7 @@ Cluster documentation
 
    about
    howdoi/index
-   systeminfo/index
-   notes
 
-
-* :ref:`search`
+.. systeminfo/index
+.. notes
 
